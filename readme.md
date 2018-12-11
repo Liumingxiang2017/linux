@@ -13,5 +13,8 @@ MTU
 
 TTL Time-To-Live
 
+TCP Transmission Control Protocal
+UDP User Datagram Protocal
+
 
 
