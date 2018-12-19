@@ -31,3 +31,16 @@ usr universal shared read-only
 /etc
 /usr/share/man
 
+/usr/bin /usr/sbin /usr/lib /usr/etc
+
+/usr/local/bin /usr/local/sbin /usr/local/lib /usr/local/etc /usr/local/man
+
+Redhat SUSE : RPM (Redhat Package Manager) , (RPM is Package Manager)
+Debian : dpt (debian package tools)
+
+yum : Yellowdog Update Modifier
+apt-get 
+
+yum repository
+
+
