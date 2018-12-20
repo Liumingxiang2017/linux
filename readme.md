@@ -43,4 +43,20 @@ apt-get
 
 yum repository
 
+createrepo
+
+XML eXtended Mark Language
+JSON 
+
+meta data
+primary.xml.gz
+
+/etc/yum.conf
+/etc/yum.repos.d/
+
+yum repolist 
+yum install -y 
+yum install --nogpgcheck
+
+yum localinstall [--nogpgcheck] filename
 
