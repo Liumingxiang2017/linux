@@ -60,3 +60,45 @@ yum install --nogpgcheck
 
 yum localinstall [--nogpgcheck] filename
 
+gcc GNU C Complier
+g++
+
+make makefile
+
+automake, makefile.in
+autoconf, configure
+make install
+
+
+# tar
+# cd
+./configure
+	--help
+	--prefix=/path/to/somewhere
+	--sysconfdir=/path/to/conffile
+# make
+# make install
+
+
+tar xvf tengine-1.4.2.tar.gz
+cd tengine-1.4.2
+./configure --prefix=/usr/local/tengine --conf-path=/etc/tengine/tengine.conf
+make
+make install
+/usr/local/tengine/sbin/nginx
+
+
+1 PATH 
+	/etc/profile
+	/etc/profile.d  xxx.sh export PATH=$PATH:/path/to/somewhere
+2 /lib /usr/lib  
+	/etc/ld.so.conf.d/xxx.conf
+	ldconfig -v
+3 /usr/include
+	ln -s /usr/local/tengine/include/* /usr/include/
+	ln -s /usr/local/tengine/include /usr/include/tengine
+4 /usr/share/man
+	man -M /path/to/man_dir command
+	/etc/man.config MANPATH
+
+
