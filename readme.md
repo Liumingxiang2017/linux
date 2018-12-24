@@ -60,22 +60,26 @@ yum install --nogpgcheck
 
 yum localinstall [--nogpgcheck] filename
 
-gcc GNU C Complier
-g++
+gcc GNU C Complier,  C
+g++ C++
 
-make makefile
+make : project management tool 
+	makefile : define how make to complie source
 
-automake, makefile.in
-autoconf, configure
+automake --> makefile.in
+autoconf --> configure
+
 make install
 
 
+compile tree steps:
 # tar
 # cd
 ./configure
 	--help
 	--prefix=/path/to/somewhere
 	--sysconfdir=/path/to/conffile
+	function : 1. choose compile functions 2. check environment
 # make
 # make install
 
@@ -86,6 +90,8 @@ cd tengine-1.4.2
 make
 make install
 /usr/local/tengine/sbin/nginx
+	/etc/profile
+	PATH=$PATH:/usr/local/tengine/sbin
 
 
 1 PATH 
@@ -93,7 +99,7 @@ make install
 	/etc/profile.d  xxx.sh export PATH=$PATH:/path/to/somewhere
 2 /lib /usr/lib  
 	/etc/ld.so.conf.d/xxx.conf
-	ldconfig -v
+	ldconfig -v : inform system to research library files
 3 /usr/include
 	ln -s /usr/local/tengine/include/* /usr/include/
 	ln -s /usr/local/tengine/include /usr/include/tengine
@@ -101,4 +107,52 @@ make install
 	man -M /path/to/man_dir command
 	/etc/man.config MANPATH
 
+httpd
+apachectl start
 
+while usage 1
+while :;do
+
+done
+
+while usage 2
+while read LINE; do
+
+done < /path/to/somefile
+
+task structure
+
+MMU : Memory Management Unit
+
+TLB : 
+
+Context Switch
+
+vsz : virtual size
+rss : resident size
+
+process
+tread
+
+Linux Process/Tread Model
+
+Stop
+Ready
+Executing
+Sleep
+	Uniterruptible sleep
+	Interruptible sleep
+Zombie
+
+pstree
+
+O
+	O(1)
+	O(n)
+	O(logn)
+	O(n^2)
+	O(2^x)
+
+0~99
+100~139
+	nice value
