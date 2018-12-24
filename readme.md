@@ -140,7 +140,7 @@ Stop
 Ready
 Executing
 Sleep
-	Uniterruptible sleep
+	Uninterruptible sleep
 	Interruptible sleep
 Zombie
 
@@ -155,4 +155,63 @@ O
 
 0~99
 100~139
-	nice value
+	nice value : -20 ~ 19
+
+PID : Process ID 
+
+
+ps : process state
+	BSD style : 
+	a : list all processes with a terminal 
+	u : 
+	x : list all process without a terminal
+	
+	SysV styel :
+	-ef
+	
+process status:
+
+	D: uninterruptible sleep
+	R: executing or ready
+	S: interruptible sleep
+	T: stop
+	Z: zombie
+pstree
+gprep
+pidof
+top
+
+
+IPC Inter Process Communication
+	memory shared
+	signal
+	semaphore
+
+kill -l
+	1: SIGHUP
+	2: SIGINT
+	9: SIGKILL
+	15:SIGTERM  
+
+kill PID
+killall COMMAND
+
+nice
+	renice NI PID
+	nice -n NI COMMAND
+free
+pkill
+
+bg JOBID
+Ctrl+z
+COMMAND &
+fg JOBID
+Kill %JOBID
+
+vmstat
+uptime
+
+cat /proc/meminfo
+cat /proc/cpuinfo
+
+cat /proc/x/maps
