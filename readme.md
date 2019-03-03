@@ -154,6 +154,7 @@ O
 	O(2^x)
 
 0~99
+
 100~139
 	nice value : -20 ~ 19
 
@@ -176,11 +177,8 @@ process status:
 	S: interruptible sleep
 	T: stop
 	Z: zombie
-pstree
-gprep
-pidof
-top
 
+pstree;gprep;pidof;top
 
 IPC Inter Process Communication
 	memory shared
@@ -194,12 +192,14 @@ kill -l
 	15:SIGTERM  
 
 kill PID
+
 killall COMMAND
 
 nice
 	renice NI PID
 	nice -n NI COMMAND
 free
+
 pkill
 
 bg JOBID
@@ -209,9 +209,31 @@ fg JOBID
 Kill %JOBID
 
 vmstat
+
 uptime
 
 cat /proc/meminfo
+
 cat /proc/cpuinfo
 
 cat /proc/x/maps
+
+alias配置文件在~/.bashrc
+
+常用快捷键
+	ctrl+a 光标移动到行首
+	ctrl+e 光标移动到行尾
+	ctrl+l 清屏相当于clear
+	ctrl+u 删除到行首部
+
+ctrl+y 粘贴ctrl+u剪切的内容
+
+UUID（唯一标识符）冲突：
+	vi /etc/sysconfig/network-scripts/ifcfg-eth0
+	#删除MAC地址行
+	rm -rf /etc/udev/rules.d/70-persistent-net.rules
+	#删除MAC地址和UUID绑定文件
+	reboot
+	#重启Linux
+
+本地图形终端 tty7  ctrl+alt+F7（按住三秒）
