@@ -229,6 +229,7 @@ alias配置文件在~/.bashrc
 ctrl+y 粘贴ctrl+u剪切的内容
 
 UUID（唯一标识符）冲突：
+
 	vi /etc/sysconfig/network-scripts/ifcfg-eth0
 	#删除MAC地址行
 	rm -rf /etc/udev/rules.d/70-persistent-net.rules
@@ -237,3 +238,17 @@ UUID（唯一标识符）冲突：
 	#重启Linux
 
 本地图形终端 tty7  ctrl+alt+F7（按住三秒）
+
+## 常见系统痕迹日志
+* /var/log/wtmp 对应last命令，查询系统所有登录过的用户的信息
+* /var/run/utmp 对应w,who命令
+* /var/log/btmp  对应lastb，查询错误登录信息
+* /var/log/lastlog 对应lastlog，查看所有用户的最后一次登录信息
+
+load average 按照经验值不应该超过服务器CPU总核数。
+
+计算机的70/90原则指，cpu不超过70%，内存不超过90%。
+
+光盘设备文件名，Centos5.x以前是/dev/hdc, Centos6.x以后是/dev/sr0
+
+
