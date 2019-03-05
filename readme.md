@@ -251,4 +251,6 @@ load average 按照经验值不应该超过服务器CPU总核数。
 
 光盘设备文件名，Centos5.x以前是/dev/hdc, Centos6.x以后是/dev/sr0
 
+U盘挂载，通过fdisk -l来查看usb设备，对于FAT32需要指定vfat，还要中文编码utf8，mount -t vfat -o iocharset=utf8 usb设备 /dev/usb/ 
+
 
