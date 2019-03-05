@@ -253,4 +253,42 @@ load average 按照经验值不应该超过服务器CPU总核数。
 
 U盘挂载，通过fdisk -l来查看usb设备，对于FAT32需要指定vfat，还要中文编码utf8，mount -t vfat -o iocharset=utf8 usb设备 /dev/usb/ 
 
+## Linux的驱动加载顺序：
+1. 驱动直接放入内核中，这种驱动主要是系统启动加载需要的内存，数量较少。
+2. 驱动以模块的形式放入硬盘，大多数驱动都以这种方式保存，保存位置/lib/modules/kernelid/kernel/ 以.ko文件保存。
+3. 驱动可以被Linux识别，但是系统认为这种驱动一般不常用，默认不加载。如果需要加载这种驱动，需要重新编译内核，而NTFS文件系统的驱动就属于这种情况。
+4. 硬件不能被Linux内核识别，需要手工安装驱动。当然前提是厂商提供了该硬件针对Linux的驱动，否则就需要自己开发驱动了。
+
+## 使用NTFS-3G安装NTFS文件系统模块
+* 下载NTFS-3G插件，我们从网站http://www.tuxera.com/community/ntfs-3g-download/下载NTFS-3G插件到linux服务器上。
+* 安装NTFS-3G插件，安装命令如下，要保证gcc编译器已经安装
+```
+tar -zxvf ntfs-3g_ntfsprogs-2013.1.13.tgz
+#解压
+cd ntfs-3g_ntfsprogs-2013.1.13
+#进入解压目录
+./configure
+#编译器准备。没有指定安装目录，安装到默认位置中
+make
+#编译
+make install
+#编译安装
+* 安装完就可以挂载使用Windows的NTFS分区了，不过挂载分区是文件系统不是ntfs，而是ntfs-3g。挂载命令如下：
+```
+mount -t ntfs-3g 分区设备文件名　挂载点
+
+## vi
+* a追加，i插入，o在下面。
+* wq!强制保存退出，当文件的所有者或者root用户，对文件没有写权限的时候，强制写入数据。
+* 退出ZZ。
+* ^移动到行首，$移动到行尾,同正则。
+* ：n移动到第几行。x删除字母，nx删除n个字母。
+* dd删除行或者剪切,ndd删除多行或者剪切，：n1,n2d删除指定行，yy复制行，nyy复制多行
+* p在下面粘贴，P在上面粘贴
+* dG从当前行删除到文件首
+* u撤销，Ctrl+r反撤销
+* r替换光标所在处字符，R进入替换模式，从光标处开始替换，ESC退出 
+* :set nu或:set nonu 显示或隐藏行号
+* :syntax on或:syntax off 
+
 
