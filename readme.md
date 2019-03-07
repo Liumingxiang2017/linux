@@ -289,6 +289,13 @@ mount -t ntfs-3g 分区设备文件名　挂载点
 * u撤销，Ctrl+r反撤销
 * r替换光标所在处字符，R进入替换模式，从光标处开始替换，ESC退出 
 * :set nu或:set nonu 显示或隐藏行号
-* :syntax on或:syntax off 
+* :syntax on或:syntax off 显示语法颜色
+* :set hlsearch或set nohlsearch 是否高亮显示搜索
+* :set ruler或:set noruler 设置是否显示右下角的状态栏。默认是:set ruler显示
+* :set showmode或:set noshowmode 设置是否显示左下角的状态栏。默认是:set showmode
+* :set list或:set nolist 设置是否显示隐藏字符（Tab键用“^I”表示，回车符用”$“表示）。默认是nolist，类似cat -A 文件名。
 
+vim支持更多设置参数，可通过:set all查看。如果需要永久生效，需要手工建立~/.vimrc，把参数写入配置文件。
+
+补充：windows下回车符在linux中是用”^M$“符号显示，而不是”$“。这会导致windows编辑的程序脚本，无法在linux中执行。这是可以通过命令dos2unix，把windows格式转为linux格式，反过来unix2dos。这两个命令默认没有安装，需要手工安装才能使用。
 
