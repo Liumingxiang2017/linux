@@ -294,8 +294,35 @@ mount -t ntfs-3g 分区设备文件名　挂载点
 * :set ruler或:set noruler 设置是否显示右下角的状态栏。默认是:set ruler显示
 * :set showmode或:set noshowmode 设置是否显示左下角的状态栏。默认是:set showmode
 * :set list或:set nolist 设置是否显示隐藏字符（Tab键用“^I”表示，回车符用”$“表示）。默认是nolist，类似cat -A 文件名。
+* / 查找内容，从光标所在行向下查找，? 查找内容，从光标所在行向上查找
+* :1,10s/old/new/g 替换1到10行的所有old为new，:%s/old/new/g 替换真个文件的old为new，批量注释:1,10s/^/#/g，批量取消注释:1,10s/^#//g，在C或者PHP等语言中，使用“//”开头作为注释，批量注释:1,10s/^/\/\//g，批量取消注释:1,10s/^\/\///g
+* :r filename 导入其他文件的内容
+* :! 在vim中执行系统命令
+* :r !命令 导入命令的执行结果
+* :map 快捷键 快捷键执行的命令，自定义快捷键，常用的自定义快捷键有:map ^P I#<ESC> 按住ctrl+p时，在行首加入注释，:map ^B ^x，按住ctrl+b删除行首第一个字母（删除注释）,注意^p不能手工输入，需要ctrl+v，然后ctrl+p，^b也是一样。而且如果需要永久生效，需要写入配置文件~/.vimrc
+* 字符替换 :ab 原字符 替换字符，比如 :ab mymail liumingxiang@qq.com 注意原字符不可以太短
+* 多文件打开，vim -o abc bcd上下分屏打开两个文件，vim -O abc bcd 左右分屏打开两个文件，如果时上下打开，可以通过先按ctrl+w，再按上下箭头来切换，如果时左右，可以通过先按ctrl+w，再按左右箭头来切换。
 
 vim支持更多设置参数，可通过:set all查看。如果需要永久生效，需要手工建立~/.vimrc，把参数写入配置文件。
 
 补充：windows下回车符在linux中是用”^M$“符号显示，而不是”$“。这会导致windows编辑的程序脚本，无法在linux中执行。这是可以通过命令dos2unix，把windows格式转为linux格式，反过来unix2dos。这两个命令默认没有安装，需要手工安装才能使用。
+
+## 软件包
+### 源码包
+* 可以自由选择所需功能
+* 软件是编译安装，所有更加适合自己的系统，更加稳定也效率更高。源码包比二进制包效率大概要高5%
+* uninstall more conveniently, 删掉目录基本就没有残余了
+* have more steps of installing process, especially when installing big software(如LAMP环境搭建), 容易出现错误。
+* 编译时间较长，比二进制安装时间长，gentoo linux使用纯源码包安装，需要3天左右。250m的mysql大概要半小时。
+* 编译安装一旦出错，难以解决
+### 二进制包
+#### 二进制包分类
+* DPKG包，是由Debian所开发的包管理机制，通过dpkg包，debian就可以进行软件包管理。主要Debian和ubuntu使用
+* RPM包，是由red hat开发的包管理系统。fedora，centos，suse等使用。
+#### 特点
+* 包管理系统简单，安装速度比源码包安装快
+* 编译后无法看到源代码，功能选择不灵活，具有依赖性。
+### 选择建议
+服务提供大量用户访问，建议源码包，源码包效率更高（LAMP）。
+
 
