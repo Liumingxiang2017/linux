@@ -366,4 +366,4 @@ httpd-2.2.15-15.el6.centos.1.i686.rpm
 1. 启动
 * service httpd start|stop|restart|status
 * 所有执行文件都需要绝对路径，服务也是如此，/etc/rc.d/init.d/httpd  start|stop|restart|status，其中 /etc/rc.d/init.d/httpd=/etc/init.d/httpd
-
+2. 网页位置 /var/www/html/
