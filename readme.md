@@ -352,3 +352,9 @@ httpd-2.2.15-15.el6.centos.1.i686.rpm
 | /usr/lib/ | 程序所使用的函数库保存位置 |
 | /usr/share/doc | 基本的软件使用手册保存位置 |
 | /usr/share/man | 帮助文件保存位置 |
+#### RPM包安装
+> rpm -ivh 包全名
+> 注意一定是包全名，如果跟包全名的命令要注意路径
+> -i install安装
+> -v 显示更详细的信息
+> -h 显示安装进度hash
