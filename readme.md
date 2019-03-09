@@ -577,3 +577,10 @@ mkdir /mnt/cdrom
 mount /dev/cdrom /mnt/cdrom
 #挂载光盘到/mnt/cdrom目录下
 ```
+2. 第二步：修改其他几个yum源配置文件的扩展名，让其失效。因为只有扩展名为.repo的文件才能作为yum源配置文件。当然可以删除其他几个yum源配置程序，但是如果删除了，又想用网络作为yum源时，就没有参考文件了。
+```
+cd /etc/yum.repos.d/
+mv CentOS-Base.repo CenOS-Base.repo.bak
+mv CentOS-Debuginfo.repo CenOS-Debuginfo.repo.bak
+mv CentOS-Vault.repo CentOS-Vault.repo.bak
+```
