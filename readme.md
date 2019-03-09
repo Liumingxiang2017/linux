@@ -351,17 +351,19 @@ httpd-2.2.15-15.el6.centos.1.i686.rpm
 | /usr/lib/ | 程序所使用的函数库保存位置 |
 | /usr/share/doc | 基本的软件使用手册保存位置 |
 | /usr/share/man | 帮助文件保存位置 |
-#### RPM包安装
-> rpm -ivh 包全名
->
-> 注意一定是包全名，如果跟包全名的命令要注意路径
->
-> -i install安装
->
-> -v 显示更详细的信息
->
-> -h 显示安装进度hash
+#### RPM包手工安装
+rpm -ivh 包全名
+```
+注意一定是包全名，如果跟包全名的命令要注意路径
 
+* -i install安装
+* -v 显示更详细的信息
+* -h 显示安装进度hash
+* -nodeps 不检测依赖性，不建议这么做
+* --force 强制安装。不管是否已经安装，都强制重新安装。为了弥补重要文件丢失的情况，卸载再安装可能会把已经配好的文件。
+* --test 只检测依赖性
+* --prefix 指定安装路径，不建议使用
+```
 ##### RPM包安装的Apache
 1. 启动
 	* service httpd start|stop|restart|status
@@ -370,3 +372,207 @@ httpd-2.2.15-15.el6.centos.1.i686.rpm
 	/var/www/html/, 添加index.html文件，不需要重启服务，是否需要重启看是否修改了配置文件，此处只是修改网页文件，并不影响配置。
 3. 配置文件
 	/etc/httpd/conf/httpd.conf
+4. 安装顺序
+	1. httpd-tools-2.2.15
+	2. httpd-2.2.15
+	3. httpd-manual-2.2.15
+	4. httpd-devel-2.2.15
+##### RPM包建议安装在默认路径中（必须） 
+1. 默认安装位置是系统的习惯位置 
+2. RPM包管理系统是有卸载命令的（数据库记录安装位置，-e就可以完全卸载），但源码包必须指定位置，虽然也有默认位置，但是没有数据库，没有卸载命令，而是通过rm来删除目录。 
+
+#### RPM包升级
+```
+rpm -Uvh 包全名
+
+-U 升级安装，如果没有安装过，系统直接安装。如果安装过的版本较旧，则升级到新版本（Upgrade）
+
+rpm -Fvh packageFullName
+
+-F 升级安装，如果没有安装过，则不会安装。必须安装过较旧版本，才能升级（freshen）
+```
+#### 卸载
+```
+rpm -e 包名
+
+卸载顺序和安装顺序相反，卸载依然有依赖性。另外初学者不建议使用yum直接卸载，建议rpm一个一个卸载。
+
+--nodeps 不检测依赖性，生产环境不可以使用。
+
+-e 卸载
+```
+#### 查询
+rpm安装，升级，卸载，都可以用yum替代，但查询不一样,rpm -q 查询的是本地，yum查询的是服务器
+* 查询软件包否安装
+```
+rpm -q 包名 
+
+-q 查询（query）
+```
+* 查询系统中所有的安装软件包
+```
+rpm -qa
+
+选项：-a 所有（all）
+```
+当然可以使用管道符查询某个包，rpm -qa | grep httpd
+* 查询已安装软件包的详细信息
+```
+rpm -qi 包名
+
+查询软件包详细信息-i information
+``` 
+* 查询未安装软件包的详细信息
+```
+rpm -qip packageFullName
+
+选项：-p package
+```
+* 查询软件包中的文件列表
+
+可以查询已经安装的软件包的文件列表和完整的安装目录。
+```
+rpm -ql packageName
+
+选项： -l 列出软件包中所有的文件列表和软件所安装的目录（list）
+```
+也可以查询未安装的软件保的文件列表和打算安装的位置
+```
+rpm -qlp packageFullName
+
+option: -p package
+```
+* 查询系统文件属于哪个RPM包
+```
+rpm -qf systemFileName
+
+option: -f 查询系统文件file属于哪个软件包
+```
+* 查询软件包所依赖的软件包(不太常用，因为该命令不区分已安装包和未安装包)
+```
+rpm -qR packageName
+
+option: -R requires
+```
+#### 验证
+```
+rpm -Va
+
+	option: -Va 校验本机已经安装的所有软件包
+
+rpm -V installedPackageName
+
+	option: -V verify校验指定RPM包中的文件
+
+rpm -Vf systemFileName
+
+	option: -Vf 校验某个系统文件是否被修改 
+```
+##### 验证举例
+```
+rpm -V httpd
+S.5....T.      c      /etc/httpd/conf/httpd.conf
+验证内容     文件类型     文件名
+```
+文件类型
+* c 表示配置文件config file
+* d 普通文档 documentation
+* g 鬼文件 ghost file，很少见，就是该文件不应该被这个RPM包包含
+* l 授权文件 license file
+* r 描述文件 readme
+验证内容
+* S 文件大小是否改变 size
+* M 文件类型或者文件权限（rwx）是否改变
+* 5 MD5校验和是否改变（可以看成文件内容是否改变，MD5是一种加密方式，也可以用来做完整性校验
+* D 设备的主从代码是否改变 Device
+* L 文件路径是否改变 
+* U 文件属主是否改变 User
+* G 文件的属组是否改变 Group
+* T 文件的修改时间时否改变 
+
+#### 校验证书
+上面的校验方法只能对已经安装的RPM包中的文件进行校验，但是如果RPM包本身就被动过手脚，那么校验就不能解决问题了。我们就必须使用校验证书验证。
+
+校验证书有如下特点：
+* 首先必须找到原厂的公钥文件，然后进行安装。
+* 再安装RPM包，会去提取RPM包中的证书信息，然后和本机安装的原厂证书进行校验。
+* 如果验证通过，则允许安装；如果验证不通过，则不允许安装并警告。
+
+1. 校验证书位置
+那么校验证书再哪里呢，其实CentOS 6.3的第一张光盘中就有, RM-GPG-KEY-CentOS-6，另外默认也会放在系统中/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+建立一个服务器管理手册，诸如配IP，配防火墙，导入数字证书，做一些关闭服务，做一些优化。
+2. 数字证书导入
+```
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+option: --import 导入数字证书
+```
+3. 查询安装好的数字证书(重要)
+```
+rpm -qa | grep gpg-pubkey
+gpg-pubkey-c105b9de-4e0fd3a3
+```
+#### RRM包中文件的提取
+##### cpio命令
+原本该命令时用于备份还原，但是实际中完全不用做备份还原，但RPM包中文件的提取，必须使用cpio命令。cpio 命令主要有三种基本模型；”-o“模式指的时copy-out模式，就是把数据备份到文件库中; ”-i“模式指的是copy-in模式，就是把数据从文件库中恢复; ”-p“模式指的是复制模式，就是不把数据备份到cpio库，而是直接复制为其他文件。命令如下：
+```
+cpio -o[vcB] > [文件][设备]
+
+#备份
+
+option:
+* -o copy-out模式，备份
+* -v 显示备份过程
+* -c 使用较新的portable format存储方式
+* -B 设定输入输出块为5120bytes，而不是模式的512bytes
+
+cpio -i[vcdu] < [文件|设备]
+
+#还原
+
+option:
+* -i copy-in模式，还原
+* -v 显示还原过程
+* -c 使用较新的portable format存储模式
+* -d 还原时自动新建目录
+* -u 自动使用较新的文件覆盖较旧的文件
+
+cpio -p 目标目录
+
+* 利用find命令找到文件，备份
+find /etc/ -print | cpio -ovcB > /root/etc.cpio
+
+#find指定要备份/etc/目录，使用>导入/etc.cpio文件
+
+* 恢复cpio的备份数据
+cpio -idvcu < /root/etc.cpio
+```
+##### 提取RPM包中的文件
+```
+rpm2cpio packageFullName | cpio -idv .文件绝对路径
+
+option:
+* rpm2cpio 将rpm包转换为cpio格式的命令
+* cpio 是一个标准工具，用于创建软件档案文件，和从档案文件中提取文件
+```
+
+# RPM包在线安装（yum安装）
+## yum文件解析
+yum源配置文件保存再/etc/yum/repos.d/目录中，文件扩展名一定是.repo。
+
+CentOS-Base.repo中的base容器解析：
+* [base] 容器名称，一定要放在[]中
+* name 容器说明，可以自己随便写
+* mirrorlist 镜像站点，这个可以注释掉
+* baseurl 我们yum原服务器的地址。默认是CentOS官方的yum源服务器，是可以使用的。如果觉得慢，可以改成自己喜欢的yum源地址。
+* enabled 此容器是否生效，如果不写或写成enabled=1则表示此容器生效，写成enabled=0则表示此容器不生效
+* gpgcheck 如果为1表示RPM的数字证书生效，如果为0表示RMP数字证书不生效
+* gpgkey 数字证书的公钥文件保存位置，不用修改。
+## 搭建本地光盘yum源
+1. 第一步：放入CentOS安装光盘，并挂载到指定位置
+```
+mkdir /mnt/cdrom 
+#创建cdrom目录，作为光盘挂载点
+
+```
