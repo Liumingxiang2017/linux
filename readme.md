@@ -584,3 +584,17 @@ mv CentOS-Base.repo CenOS-Base.repo.bak
 mv CentOS-Debuginfo.repo CenOS-Debuginfo.repo.bak
 mv CentOS-Vault.repo CentOS-Vault.repo.bak
 ```
+3. 第三步：修改光盘yum源文件CentOS-Media.repo，参照一下方法修改
+```
+[c6-media]
+name=CentOS-$releasever-Media
+baseurl=file:///mnt/cdrom
+#地址为自己光盘挂载地址
+#       file:///media/cdrom/
+#       file:///media/cdrecorder
+#注释这两个不存在的地址
+gpgcheck=1
+enabled=1
+#把enabled=0改为1，让这个yum源配置文件生效
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+```
