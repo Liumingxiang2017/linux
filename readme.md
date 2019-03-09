@@ -574,5 +574,6 @@ CentOS-Base.repo中的base容器解析：
 ```
 mkdir /mnt/cdrom 
 #创建cdrom目录，作为光盘挂载点
-
+mount /dev/cdrom /mnt/cdrom
+#挂载光盘到/mnt/cdrom目录下
 ```
