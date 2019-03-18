@@ -598,3 +598,217 @@ enabled=1
 #把enabled=0改为1，让这个yum源配置文件生效
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ```
+## yum命令
+1. 查询
+* 查询已经安装的软件包和yum源服务器商所有可安装的软件包列表
+```
+yum list
+```
+* 查询yum源服务器中是否包含某个软件包
+```
+yum list packageName
+#查询单个软件包
+```
+* 搜索yum源服务器上所有和关键字相关的软件包，另外相关命令和文件也能查到包
+```
+yum search keyword
+例如：
+yum search ifconfig
+匹配 net-tools.i686
+```
+* 查询指定软件包的信息 
+```
+yum info packageName
+```
+2. 安装
+```
+yum -y install packageName
+yum方法，不需要区分包名和包全名，只有rpm手工安装区分包名和包全名。
+-y 自动回答yes
+```
+3. 升级
+```
+yum -y update packageName
+#升级指定的软件包
+option：
+	update: 升级
+#注意：在进行升级操作时，yum源服务器中软件包的版本要比本机安装的软件包的版本高。
+
+yum -y update
+#升级本机所有软件包包括内核，但是因为生产服务器是稳定优先的，所以这种全系统升级的情况并不多见。redhat5以前版本严禁使用。
+```
+4. 卸载
+再次强调一下，除非你确定卸载的软件的依赖包不会对系统产生影响，否则可能导致系统崩溃。
+```
+yum remove packageName
+#卸载指定软件包
+```
+## yum组管理命令
+1. 查询
+* 查询可以安装的软件组和已经安装的软件组
+```
+yum grouplist
+#list all available software group list
+```
+* 查询指定软件组
+```
+yum grouplist "Chinese Support"
+```
+* 查询软件组内包含的软件
+```
+yum groupinfo groupName
+例如：
+yum groupinfo "Web Server"
+```
+2. 安装软件组
+```
+yum groupinstall "groupName"
+```
+3. 卸载软件组
+```
+yum groupremove "groupName"
+```
+
+源码包安装
+***
+# 1.注意事项
+## 1.1 应该选择哪种软件包
+* 如果软件包是给大量客户提供访问的，建议使用源码包安装，如LAMP环境搭建，因为源码包效率更高。
+* 如果软件包师给Linux底层使用，或者只给少量客户访问，建议使用rpm包安装，因为rpm包更简单。
+## 1.2 源码包是从哪里来的？
+rpm包是光盘中直接包含的，所以不需要用户单独下载。而源码包是通过官方网站下载的，如果需要使用，是需要单独下载的。
+## 1.3 是否可以在系统中即安装rpm包的Apache，又安装源码包的Apache?
+答案是可以的，因为两中安装方法安装的Apache，安装位置不一样。
+```
+RPM包：不建议指定安装位置，建议安装在默认位置（RPM包安装的服务有标准卸载命令，不怕文件到处安装。）
+* 配置文件：/etc/httpd/conf/httpd.conf
+* 网页位置：/var/www/html/
+* 日志位置：/var/log/httpd/
+* 启动方法：1) service httpd restart 2) /etc/rc.d/init.d/httpd restart
+
+源码包：必须指定安装位置（源码包没有数据库，也没有卸载命令）
+* 配置文件：/usr/local/apache2/conf/httpd.conf
+* 网页文件：/usr/local/apache2/htdocs/
+* 日志位置：/usr/local/apache2/logs/
+* 启动方法：/usr/local/apache2/bin/apachectl start
+```
+## 1.4 生产服务器上，是否会同时安装两种Apache?
+当然不会，因为系统只有一个80端口，指定其他端口没有意义，因为网页目的是给用户访问的，但用户不知道该端口，所有只能启动一个Apache，装多个浪费资源。我们建议安装源码包的Apache。
+
+服务是否可以修改端口：
+* 如果服务是给大量客户端访问的，不建议更换端口，因为用户找不着了。
+* 如果服务是给内部人员使用的，建议更换端口，因为更加安全（SSH）。
+
+ps aux 查看进程 和netstat -tulnp类似
+
+# 2.安装过程
+源码包安装具体步骤：
+1. 下载软件包。
+2. 解压缩。
+3. 进入解压缩目录
+4. ./configure --prefix=/usr/local/** 编译前准备和指定目录
+这一步主要有三个作用：
+* 在安装之前需要检测系统环境是否符合安装要求。
+* 定义需要的功能选项。"./config"支持的功能较多，执行“./configure --help”命令查询其支持的功能。一般都会通过“./configure --prefix=安装路径”来指定路径
+* 把系统环境的检测结果和定义好的功能选项写入Makefile文件，后续的编译和安装需要依赖这个文件的内容。
+需要注意的是，configure不是系统命令，而是源码包软件自带的一个脚本程序，所以必须采用“./configure”方式执行。
+源码包报错：
+* 安装必须停止
+* 是否出现no,warning,error关键字
+5. make 编译
+make会调用gcc编译器，并读取Makefile文件中的信息进行系统软件编译。编译的目的就是把源码程序转变为Linux识别的可执行文件，这些可执行文件保存在当前目录下。编译过程较为耗时，需要耐心等待。
+6. make clean：清空编译内容（非必要步骤）
+如果在“./configure”或“make”编译中报错，那么我们在重新执行命令前一定要记得执行make clean命令，它会清空Makefile文件或编译产生的“.o”头文件。
+7. make install 编译安装
+这才是真正的安装过程，一般会写清楚程序的安装位置。如果忘记指定安装目录，则可以把这个命令的执行过程保存下来，以备将来删除使用。
+# 3.删除
+源码包没有删除命令，如果需要删除，直接删除安装目录即可。
+# 4.打入补丁
+## 4.1补丁的生成
+```
+diff 选项 old new
+#比较old和new文件的不同
+option：
+-a 将任何文档当作文本文档处理
+-b 忽略空格造成的不同
+-B 忽略空白行造成的不同
+-I 忽略大小写造成的不同
+-N 当比较两个目录时，如果某个文件只在一个目录中，则在另一个目录中是做空文件。
+-r 比较目录时，递归比较子目录
+-u 使用同一输出格式
+
+举例:
+mkdir text
+cd text
+vi old.txt
+cp old.txt new.txt
+diff -Naur /root/text/old.txt /root/txt/new.txt > pat.txt
+比较这两个文件不同,注意必须时绝对路径,并生成补丁文件pat.txt,
+
+```
+## 4.2打入补丁
+```
+patch -pn < 补丁文件
+#按照补丁文件进行更新
+选项:
+-pn n为数字.代表按照补丁文件中的路径,指定更新文件的位置.
+```
+-pn不好理解,我们说明一下.补丁时要打入旧文件的,但是你当前所在目录和补丁文件中的记录的目录时不一定匹配的，所以就需要-pn来同步两个目录。
+
+比如我当前是在/root/test目录中，补丁文件中记录的文件目录为/root/test/old.txt，这时如果写入-p1（在补丁文件目录中取消一级目录）那么补丁文件就会打入/root/test/root/test/old.txt文件中；如果写入的时-p3(在补丁文件目录中取消三级目录)那么补丁文件就是打入/root/test/old.txt,我们的old.txt文件就在这个目录下，所以就应该是-p3。
+```
+patch -p3 old.txt < pat.txt 
+```
+# 脚本安装
+优点：安装简单；缺点：版本有所不同，功能不可定制，安装位置无法自定义。
+## 1. 脚本程序简介
+脚本程序包并不多见，它更加类似Windows下的程序安装，有一个可执行的安装程序，只要运行安装程序，然后进行简单的功能定制选择，就可以安装成功，只不过是在字符界面下完成的。目前脚本程序以各类硬件的驱动居多。
+## 2. Webmin安装
+### 2.1简介
+Webmin是一个基于Web的系统管理界面。借助任何支持表格和表单的浏览器（和File Manager模块所需的Java）,你可以设置账号，apache，DNS，文件共享等。Webmin包括一个简单的Web服务器和许多CGI程序，这些程序可以直接修改系统文件，比如/etc/init.conf和/etc/passwd。Web服务器和所有CGI程序都是用Perl5写的，没有使用任何非标准Perl模块。也就是说Webmin是一个用Perl语言写的，可以通过浏览器管理Linux的软件。
+### 2.2安装步骤
+```
+首先下载Webmin软件，地址为http://sourceforge.net/projects/webadmin/files/webmin/,这里下载的是webmin-1.610.tar.gz
+tar -zxvf webmin-1.610.tar.gz
+#解压缩软件
+cd webmin-1.610
+#进入解压目录
+./setup.sh
+#执行安装程序setup.sh并指定功能选项。
+
+下面是setup.sh运行后的交互,主要是设置一些目录
+Config file directory[/etc/webmin]:
+#选择安装位置，默认/etc/webmin目录下，如果安装到默认位置，则直接回车
+Log file directory[/var/webmin]
+#日志文件保存位置，直接回车，选择默认位置
+Full path to perl (default /usr/bin/perl)
+#指定Perl语言安装位置，直接回车，选择默认位置
+Web server port(default 10000)
+#指定webmin监听的端口，直接回车，默认选定10000
+Login name(default admin):admin
+#输入登陆webmin的用户名
+Login password:123
+Password again:123
+#输入登陆密码
+The Perl SSLeay library is not installed. SSL not available
+#apache默认没有启动SSL功能，所以SSL没有被激活
+Start Webmin at boot time (y/n):y
+#是否开机启动webmin
+
+注意：因为是网页的，需要启动apache
+```
+补充：安装上传下载工具（需要xshell）
+```
+cd /mnt/cdrom/Packages/
+rpm -ivh lrzsz-0.12.20-27.1.el6.x86.64.rpm
+rz
+#传文件到本机linux
+sz somefile
+#传文件到非本机
+```
+
+# 用户管理
+# 一 用户相关文件
+## 1. /etc/passwd 用户信息文件
+## 2. /etc/shadow 影子文件
+## 3.
