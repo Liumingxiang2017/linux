@@ -818,4 +818,18 @@ date -d "1970-01-01 15775 days"
 echo $(($(date --date="2013/03/11" +%s)/86400+1))
 #日期转时间戳
 ```
-## 3./et/group组信息文件
+## 3./etc/group组信息文件
+## 4./etc/gshadow组密码文件
+## 5.用户家目录
+## 6.用户邮箱目录 这个邮箱在/var/spool/mail目录中
+## 7.用户模板目录 /etc/skel/ 其中包含.bash_logout .bash_profile .bashrc .gnome2，/etc/skel/这个目录可以增加一些文件，以后再建立家目录就会有相应文件。
+# 用户管理命令
+# 1.添加用户
+## 1.1手工删除用户实验：手工删除，如果可以正常建立用户，证明用户删除干净
+* /etc/passwd
+* /etc/shadow
+* /etc/group
+* /etc/gshadow
+* /home/user1home
+* /var/spool/mail/usr1
+## 1.2 useradd 命令
