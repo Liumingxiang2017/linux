@@ -833,3 +833,54 @@ echo $(($(date --date="2013/03/11" +%s)/86400+1))
 * /home/user1home
 * /var/spool/mail/usr1
 ## 1.2 useradd 命令
+## 1.3 useradd 配置文件
+/etc/default/useradd，INACTIVE的值由-1改为0，表示密码到期禁止登陆
+
+/etc/login.defs，PASS_MIN_DAYS 两次密码修改间隔时间默认为9999，修改为180
+
+chage -d 0 userName，强制用户必须修改密码；原理是将上次密码时间值修改为0，这时系统会认为不正确，强制修改密码
+# 2.设定密码
+```
+passwd [option] userName
+option:
+-l: 暂时锁定用户。其实本质上就是再密码前面加了感叹号，使加密的密文不可用，仅root用户可用
+-u: 暂时解锁用户。仅root用户可用
+--stdin: 可以将通过管道符输出的数据作为用户密码，主要用于批量添加用户时使用。
+
+passwd 直接回车代表修改当前用户密码
+```
+# 3.usermod 命令
+usermod -G groupName userName 修改用户的附属组，其实就是把用户加入其他用户组
+
+# 4.删除用户
+```
+userdel -r userName
+-r : 删除家目录，习惯上必须带-r
+```
+# 5.切换用户
+```
+su - userName
+- 连带环境变量一起切换，习惯上必须带-
+```
+
+把用户添加进组或从组中删除 gpasswd
+```
+gpasswd [option] groupName
+-a : 添加
+-d ：删除
+```
+
+```
+示例：新建一个作业上交目录
+mkdir /www
+useradd lmx
+passwd lmx
+groupadd tg
+gpasswd -a user1 tg
+gpasswd -a user2 tg
+chown lmx:tg /www/
+chmod 770 /www/
+```
+
+# 权限管理
+
