@@ -1,0 +1,44 @@
+# shell 输入输出
+## echo [option] string
+- -e 解析转义字符
+- -n 回车不换行，linux默认回车换行
+## read
+- 从键盘或者文件的某一行文本中读入信息，并将其赋给一个变量
+- read variable1 variable ... 按顺序赋值
+## cat 
+- -v 显示控制字符
+- cat [option] file1 file2 ...
+    - 同时输入file1 file2
+## tee
+- 输出到标准输出，并拷贝到文件
+- tee -a files
+    - -a, --append (append to the given files, do not overwrite)
+
+## 标准输入、输出、错误
+文件 |文件描述符
+-|:-:
+标准输入| 0（缺省是键盘）
+标准输出| 1（缺省是屏幕）
+标准错误| 2（缺省是屏幕）
+
+## 重定向
+- cat file1 file2 1>file.out 2>file.err
+    - 如果有标准输出输出到file.out,如果有标准错误输出到file.err
+- command > file 2>&1 
+    - 把标准输出和标准错误一起重定向到file
+- command < file1 > file2
+    - command命令以file1作为标准输入，file2作为标准输出
+- command << delimiter
+    - 从标准输入中读入，直到遇到delimiter分界符
+- command<&m 
+    - 把文件描述符m作为标准输入
+- command>&m
+    - 把标准输出重定向到文件描述符m
+- command <&-
+    - 关闭标准输入
+
+## exec
+- 用来替代当前shell，使用时任何环境变量将被清除
+- exec command
+    - command 通常是一个脚本
+    - 只有在对文件描述符操作时，才不会覆盖当前shell
