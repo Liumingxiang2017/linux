@@ -1,5 +1,4 @@
-
-MAC Media Access Control
+# MAC Media Access Control
 
 ARP Address Resolve Protocal
 
@@ -172,11 +171,11 @@ ps : process state
 	
 process status:
 
-	D: uninterruptible sleep
-	R: executing or ready
-	S: interruptible sleep
-	T: stop
-	Z: zombie
+    D: uninterruptible sleep
+    R: executing or ready
+    S: interruptible sleep
+    T: stop
+    Z: zombie
 
 pstree;gprep;pidof;top
 
