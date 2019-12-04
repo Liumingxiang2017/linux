@@ -1,4 +1,5 @@
 ## chmod [who] operator [permission] file
+
 - who (u,g,o,a)
 - operator (+,-,=)
 - permission (r,w,x,s,t)
@@ -154,5 +155,7 @@ op1\|op2 |或
 >,==,<,!= | 大于，等于，小于，不等于
 
 ## 赋值运算符
+
 - =、+=
+
 - let $count = $count + $change
