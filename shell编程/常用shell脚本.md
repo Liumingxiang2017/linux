@@ -1,3 +1,26 @@
+# 常用脚本
+
+```bash
+#!/bin/bash
+# moring.info.cron
+/bin/date > mail.cron
+echo >> mail.cron
+echo "online users: " >> mail.cron
+/usr/bin/who | grep -v root >> mail.cron
+echo >> mail.cron
+echo "memory information: " >> mail.cron
+/usr/bin/free -m >> mail.cron
+echo "partition information: " >> mail.cron
+/bin/df -h >> mail.cron
+
+/bin/mail -s morning.info lmx < mail.cron
+/bin/rm mail.cron
+
+# crontab -e
+# minute hour day-of-month month-of-year day-of-week command
+# 0 9 * * 1-5 sh morning.info.cron
+
+```
 
 ```bash
 #!/bin/bash
