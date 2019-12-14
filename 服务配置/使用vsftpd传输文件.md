@@ -11,7 +11,7 @@
 
 ## 启动服务
 
-- service vsftpd start
+- service vsftpd start 或者 /etc/init.d/vsftpd start
 
 下载文件：get filename
 

@@ -7,7 +7,7 @@
     - 配置文件/etc/httpd/conf/httpd.conf
     - /etc/rc.d/init.d/httpd 说明可以通过system V的方式对httpd控制
 3. 启动httpd
-    - service httpd start
+    - service httpd start 或者 /etc/init.d/httpd start
 4. 配置文件
     - /etc/httpd/conf/httpd.conf 
     - ServerRoot "/etc/httpd"
