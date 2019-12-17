@@ -33,19 +33,19 @@
 ## 重定向
 
 - cat file1 file2 1>file.out 2>file.err
-    - 如果有标准输出输出到file.out,如果有标准错误输出到file.err
+  - 如果有标准输出输出到file.out,如果有标准错误输出到file.err
 - command > file 2>&1 
-    - 把标准输出和标准错误一起重定向到file
+  - 把标准输出和标准错误一起重定向到file
 - command < file1 > file2
-    - command命令以file1作为标准输入，file2作为标准输出
+  - command命令以file1作为标准输入，file2作为标准输出
 - command << delimiter
-    - 从标准输入中读入，直到遇到delimiter分界符
+  - 从标准输入中读入，直到遇到delimiter分界符
 - command<&m 
-    - 把文件描述符m作为标准输入
+  - 把文件描述符m作为标准输入
 - command>&m
-    - 把标准输出重定向到文件描述符m
+  - 把标准输出重定向到文件描述符m
 - command <&-
-    - 关闭标准输入
+  - 关闭标准输入
 
 ## exec
 - 用来替代当前shell，使用时任何环境变量将被清除
