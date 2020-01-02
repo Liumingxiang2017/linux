@@ -882,4 +882,36 @@ chmod 770 /www/
 ```
 
 # 权限管理
+# ACL权限
+## 1.ACL权限概述
+类似windows中直接对某个文件额外为某个用户设置权限
+## 2.ACL开启查询
+```
+dumpe2fs -h /dev/sda3
+#dumpe2fs 命令是查询指定分区详细文件系统信息的命令
+选项：
+-h 仅显示超级块中的信息，而不显示磁盘块组的详细信息。
+···省略部分输出···
+Default mount option: user_xattr acl
+···省略部分输出···
+``` 
+如果没有开启，手工开启分区的ACL权限：
+```
+mount -o remount,acl /
+#重新挂载根分区，并加载acl权限，临时生效
 
+vi /etc/fstab
+#加入acl，永久生效
+mount -o remount
+#重新挂载系统或者重启系统，使修改生效。
+```
+## 3.ACL基本命令
+```
+getfacl fileName 
+#查询文件的ACL权限
+
+setfacl [option] fileName
+#设定ACL权限
+-m 设定ACL权限
+-b 删除ACL权限
+```
