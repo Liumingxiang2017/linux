@@ -1,6 +1,52 @@
 # bash
 
-## 光标跳转：
+站在用户登录的角度来说，SHELL的类型：
+
+登录式shell:
+
+    正常通常某终端登录
+    su - USERNAME 
+    su -l USERNAME
+
+非登录式shell:
+
+    su USERNAME
+    图形终端下打开命令窗口
+    自动执行的shell脚本
+
+bash的配置文件：
+
+全局配置
+
+    /etc/profile, /etc/profile.d/*.sh, /etc/bashrc
+
+个人配置
+
+    ~/.bash_profile, ~/.bashrc
+
+profile类的文件：
+
+    设定环境变量
+    运行命令或脚本
+
+bashrc类的文件：
+
+    设定本地变量
+    定义命令别名
+
+登录式shell如何读取配置文件？
+
+    /etc/profile --> /etc/profile.d/*.sh --> ~/.bash_profile --> ~/.bashrc --> /etc/bashrc
+
+非登录式shell如何配置文件?
+
+    ~/.bashrc --> /etc/basrc --> /etc/profile.d/*.sh
+
+profile: 定义环境变量、运行程序或脚本
+
+bashrc：定义本地变量、命令别名
+
+## 光标跳转
 
 Ctrl+a：跳到命令行首
 Ctrl+e：跳到命令行尾
