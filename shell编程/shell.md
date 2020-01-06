@@ -190,7 +190,27 @@ file-2013-02-28-14-53-31.txt
 - 括号：创建成组的命令
 - 大括号：创建命令块
 
-# 变量
+## 系统设定
+
+默认输出设备：标准输出，STDOUT, 1
+
+默认输入设备：标准输入, STDIN, 0
+
+标准错误输出：STDERR, 2
+
+标准输入：键盘
+
+标准输出和错误输出：显示器
+
+2>: 重定向错误输出
+
+2>>: 追加方式
+
+&>: 重定向标准输出或错误输出至同一个文件
+
+<：输入重定向
+
+<<：Here Document
 
 ## 本地变量
 
@@ -279,7 +299,11 @@ $0 | $1 | $2 | ...
 
 ### set
 
-- 设置或者重设各种shell
+set用于设置各种shell
+
+set -C: 禁止对已经存在文件使用覆盖重定向；强制覆盖输出，则使用 >|
+
+set +C: 关闭上述功能
 
 ### shift [n]
 
@@ -315,3 +339,31 @@ op1\|op2 |或
 - =、+=
 
 - let $count = $count + $change
+
+练习：
+
+1、统计/usr/bin/目录下的文件个数；
+
+    ls /usr/bin | wc -l
+
+2、取出当前系统上所有用户的shell，要求，每种shell只显示一次，并且按顺序进行显示；
+
+    cut -d: -f7 /etc/passwd | sort -u
+
+3、思考：如何显示/var/log目录下每个文件的内容类型？
+
+4、取出/etc/inittab文件的第6行；
+
+    head -6 /etc/inittab | tail -1
+
+5、取出/etc/passwd文件中倒数第9个用户的用户名和shell，显示到屏幕上并将其保存至/tmp/users文件中；
+
+    tail -9 /etc/passwd | head -1 | cut -d: -f1,7 | tee /tmp/users
+
+6、显示/etc目录下所有以pa开头的文件，并统计其个数；
+
+    ls -d /etc/pa* | wc -l
+
+7、不使用文本编辑器，将alias cls=clear一行内容添加至当前用户的.bashrc文件中
+
+    echo "alias cls=clear" >> ~/.bashrc
