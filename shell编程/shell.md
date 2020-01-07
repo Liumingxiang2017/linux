@@ -1,5 +1,43 @@
 # bash
 
+shell编程：
+
+shell作为编译器，解释器
+
+编程语言：机器语言、汇编语言、高级语言
+
+静态语言：编译型语言
+
+    强类型(变量)：变量在使用前，必须事先声明，甚至还需要初始化；
+    事先转换成可执行格式
+    C、C++、JAVA、C#
+
+动态语言：解释型语言， on the fly，在计算机专业中on the fly的意思为:即时生效或在运行
+
+    弱类型：变量用时声明，甚至不区分类型；
+    边解释边执行
+    PHP、SHELL、python、perl
+
+面向过程：Shell, C
+
+面向对象: JAVA, Python, perl, C++
+
+shell: 弱类型编程语言
+
+变量：内存空间，命名
+
+内存：编址的存储单元
+
+变量类型：事先确定数据的存储格式和长度
+
+    字符
+    数值
+        整型
+        浮点型: 11.23， 1.123*10^1, 0.1123*10^2
+    2013/10/10, 64bit
+    99999: 24bit, 
+    真、假
+
 站在用户登录的角度来说，SHELL的类型：
 
 登录式shell:
@@ -212,28 +250,42 @@ file-2013-02-28-14-53-31.txt
 
 <<：Here Document
 
-## 本地变量
+## bash变量类型
 
-- 本地变量在用户现在的shell生命周期的脚本中使用
-- varibal-name=value
-- set 显示本地所有的变量 readonly -p 
-- readonly variable 使变量只读
+- 环境变量
+- 本地变量(局部变量)
+- 位置变量
+- 特殊变量
 
-## 环境变量
+### 环境变量
 
-环境变量用于所有用户进程
+- 环境变量用于所有用户进程及其子进程
 
-$HOME/.bash_profile(/etc/profile)
+- $HOME/.bash_profile(/etc/profile)
 
-export 设置环境变量
+- 设置环境变量使用export命令
 
-env或者export 查看环境变量
+```bash
+export VARNAME=VALUE
+# 或者 先简单定义后"导出"
+VARNAME=VALUE
+export VARNAME
+```
+
+- 查看环境变量，env或者export
 
 PATH：命令搜索路径
 
 HISTSIZE: 命令历史缓冲区大小
 
-## 变量替换
+### 本地变量（局部变量）
+
+- 作用域：当前bash进程生命周期
+- varibal-name=value
+- set 显示本地所有的变量 readonly -p
+- readonly variable 使变量只读
+
+### 变量替换
 
 - ${variable name} 变量值
 - ${variable name:+value} 如果设置了variable name，则显示其值value；否则为空
@@ -241,20 +293,20 @@ HISTSIZE: 命令历史缓冲区大小
 - ${variable name:-message} 如果未设置variable name，则显示message；否则为空  
 - ${variable name:=value} 如果未设置variable name，则设置其值value；否则为空
 
-## 变量清除
+### 变量清除
 
-### unset variable-name
+#### unset variable-name
 
 - -- 表明选项结束
 - -f 删除只读变量，但不能删除保留的环境变量
 
-## 位置变量
+### 位置变量
 
 $0 | $1 | $2 | ...
 -|:-:|:-:|-
 脚本名| first | second | third
 
-## 标准变量
+### 标准变量
 
 - /etc/profile
 - EXINIT vi的参数
@@ -268,7 +320,7 @@ $0 | $1 | $2 | ...
 - TZ 时区
 - PS1 提示符
 
-## 特殊变量
+### 特殊变量
 
 - $# 脚本的参数个数
 - $* 脚本全部参数
