@@ -202,8 +202,9 @@ file-2013-02-28-14-53-31.txt
 
 ## umask
 
-- default value 022,file没有默认没有执行权限
-- /etc/profile($HOME/.profile $HOME/.bash_profile)(cat /etc/profile |grep "umask")
+    default value 022,file没有默认没有执行权限
+    /etc/profile($HOME/.profile $HOME/.bash_profile)
+    (cat /etc/profile |grep "umask")
 
 ## 符号链接 (ln [-s] source-path target-path)
 
@@ -484,32 +485,29 @@ shebang: 魔数, #!/bin/bash
 
 1、添加5个用户, user1,..., user5
 
-  useradd user1
+    useradd user1
 
 2、每个用户的密码同用户名，而且要求，添加密码完成后不显示passwd命令的执行结果信息；
+
+    echo "user1" | passwd --stdin user1 &> /dev/null
+
 3、每个用户添加完成后，都要显示用户某某已经成功添加；
 
-echo "user1" | passwd --stdin user1 &> /dev/null
-echo "Add user1 successfully."
+    echo "Add user1 successfully."
 
+bash中的条件判断
 
-条件判断：
-	如果用户不存在
-		添加用户，给密码并显示添加成功；
-	否则
-		显示如果已经没在，没有添加；
-
-bash中如何实现条件判断？
 条件测试类型：
-	整数测试
-	字符测试
-	文件测试
+
+- 整数测试
+- 字符测试
+- 文件测试
 
 条件测试的表达式：
 	[ expression ]
 	[[ expression ]]
 	test expression
-	
+
 整数比较:
 	-eq: 测试两个整数是否相等；比如 $A -eq $B
 	-ne: 测试两个整数是否不等；不等，为真；相等，为假；
@@ -529,7 +527,10 @@ bash中如何实现条件判断？
 id user6 || useradd user6
 
 如果/etc/inittab文件的行数大于100，就显示好大的文件；
+
+```bash
 [ `wc -l /etc/inittab | cut -d' ' -f1` -gt 100 ] && echo "Large file."
+```
 
 变量名称：
 	1、只能包含字母、数字和下划线，并且不能数字开头；
@@ -543,15 +544,12 @@ id user1 && echo "user1 exists." || useradd user1
 ! id user1 && useradd user1 || echo "user1 exists."
 
 如果用户不存在，添加并且给密码；否则，显示其已经存在；
-! id user1 && useradd user1 && echo "user1" | passwd --stdin user1	|| echo "user1 exists."
-
+! id user1 && useradd user1 && echo "user1" | passwd --stdin user1 || echo "user1 exists."
 
 练习，写一个脚本，完成以下要求：
 1、添加3个用户user1, user2, user3；但要先判断用户是否存在，不存在而后再添加；
 2、添加完成后，显示一共添加了几个用户；当然，不能包括因为事先存在而没有添加的；
 3、最后显示当前系统上共有多少个用户；
-
-
 
 练习，写一个脚本，完成以下要求：
 给定一个用户：
