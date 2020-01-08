@@ -470,29 +470,25 @@ op1\|op2 |或
 
     echo "alias cls=clear" >> ~/.bashrc
 
-
 脚本：命令的堆砌，按实际需要，结合命令流程控制机制实现的源程序
 
-shebang: 魔数
-#!/bin/bash
-# 注释行，不执行
+shebang: 魔数, #!/bin/bash
 
+/dev/null: 软件设备， bit bucket，数据黑洞
 
-
-/dev/null: 软件设备， bit bucket，数据黑洞	
-
-	
 脚本在执行时会启动一个子shell进程；
-	命令行中启动的脚本会继承当前shell环境变量；
-	系统自动执行的脚本(非命令行启动)就需要自我定义需要各环境变量；
-	
+  命令行中启动的脚本会继承当前shell环境变量；
+  系统自动执行的脚本(非命令行启动)就需要自我定义需要各环境变量；
 
+练习
 
-练习：写一个脚本，完成以下任务
 1、添加5个用户, user1,..., user5
+
+  useradd user1
+
 2、每个用户的密码同用户名，而且要求，添加密码完成后不显示passwd命令的执行结果信息；
 3、每个用户添加完成后，都要显示用户某某已经成功添加；
-useradd user1
+
 echo "user1" | passwd --stdin user1 &> /dev/null
 echo "Add user1 successfully."
 
