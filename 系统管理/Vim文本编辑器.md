@@ -241,3 +241,102 @@ V：按矩形选取
 ADDR1,ADDR2s@PATTERN@string@gi
 1,$
 %：表示全文
+
+
+练习：将/etc/yum.repos.d/server.repo文件中的ftp://instructor.example.com/pub替换为http://172.16.0.1/yum
+
+%s/ftp:\/\/instructor\.example\.com\/pub/http:\/\/172.16.0.1\/yum/g
+%s@ftp://instructor\.example\.com/pub@http://172.16.0.1/yum@g
+
+文件内容如下：
+# repos on instructor for classroom use
+
+# Main rhel5 server
+[base]
+name=Instructor Server Repository
+baseurl=ftp://172.16.0.1/pub/Server
+gpgcheck=0
+
+# This one is needed for xen packages
+[VT]
+name=Instructor VT Repository
+baseurl=ftp://172.16.0.1/pub/VT
+gpgcheck=0
+
+# This one is needed for clustering packages
+[Cluster]
+name=Instructor Cluster Repository
+baseurl=ftp://172.16.0.1/pub/Cluster
+gpgcheck=0
+
+# This one is needed for cluster storage (GFS, iSCSI target, etc...) packages
+[ClusterStorage]
+name=Instructor ClusterStorage Repository
+baseurl=ftp://172.16.0.1/pub/ClusterStorage
+gpgcheck=0
+
+十六、使用vim编辑多个文件
+vim FILE1 FILE2 FILE3
+:next 切换至下一个文件
+:prev 切换至前一个文件
+:last 切换至最后一个文件
+:first 切换至第一个文件
+
+退出
+:qa 全部退出
+
+十七、分屏显示一个文件
+Ctrl+w, s: 水平拆分窗口
+Ctrl+w, v: 垂直拆分窗口
+
+在窗口间切换光标：
+Ctrl+w, ARROW
+
+:qa 关闭所有窗口
+
+十八、分窗口编辑多个文件
+vim -o : 水平分割显示
+vim -O : 垂直分割显示
+
+十九、将当前文件中部分内容另存为另外一个文件
+末行模式下使用w命令
+:w
+:ADDR1,ADDR2w /path/to/somewhere
+
+二十、将另外一个文件的内容填充在当前文件中
+:r /path/to/somefile
+
+二十一、跟shell交互
+:! COMMAND
+
+二十二、高级话题
+1、显示或取消显示行号
+:set number
+:set nu
+
+:set nonu
+
+2、显示忽略或区分字符大小写
+:set ignorecase
+:set ic
+
+:set noic
+
+3、设定自动缩进
+:set autoindent
+:set ai
+:set noai
+
+4、查找到的文本高亮显示或取消
+:set hlsearch
+:set nohlsearch
+
+5、语法高亮
+:syntax on
+:syntax off
+
+二十三、配置文件
+/etc/vimrc
+~/.vimrc
+
+vim: 
