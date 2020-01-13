@@ -1,4 +1,64 @@
-# samba
+# samba 文件服务器
+
+## 入门概述
+
+### windows网上邻居
+
+#### 工作原理
+
+通过SMB协议共享传输文件，具有自己的主机名称解析系统(wins)。
+
+SMB (Server Messsage Block)/CIFS (Common Internet File System)是基于Netbios协议的，所以不能跨越子网通信。
+
+认证模式
+
+工作组模式：用户账号密码存放在每台主机上，通过对方主机的认证授权。
+域服务器模式：用户账号集中存放在域服务器，每台主机通过域服务器认证授权。
+
+跟linux共享必须安装TCP/IP
+
+直接输入\\server\sharename
+
+#### 设置共享文件夹
+
+1. 文件夹右键属性
+2. 共享标签卡---高级共享---勾选共享此文件夹
+
+#### 设置可访问用户
+
+默认所有人都可以访问，删除everyone，然后指定用户权限。
+
+1. 文件夹右键属性
+2. 共享标签卡---高级共享---权限
+3. 删除everyone---添加用户并指定权限
+
+### Linux访问网上邻居
+
+- 需要samba客户端
+- 挂载
+
+```shell
+# 方式1
+mount -t smbfs //server/sharename /localdir
+# 方式2
+smbmount //server/sharename /localname
+```
+
+- 使用smbclient
+
+```shell
+smbclient //server/sharename -U name%passwd
+```
+
+## samba工具集
+
+samba软件与工具介绍
+
+samba为windows提供共享
+
+安全级别
+
+用户账号与认证
 
 samba项目开发 http://www.samba.org
 
@@ -77,5 +137,4 @@ smbmount //host/share /mnt -o username=USERNAME%PASSWORD
 测试
 
     smbclient -L localhost
-
 
