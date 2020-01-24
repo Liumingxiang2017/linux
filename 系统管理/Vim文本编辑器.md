@@ -112,7 +112,7 @@ dG    |  删除光标所在行到末尾
  :set nu   |   显示行号
  :set hlsearch   |   高亮显示搜索结果
  :set nonu |   不显示行号
- :set nohlserach |   不高亮显示搜索结果
+ :set nohlsearch |   不高亮显示搜索结果
  :nu       |   跳转到第nu行
  :n1,n2d   |   删除n1到n2行 
  :%s/old/new/g | 替换
