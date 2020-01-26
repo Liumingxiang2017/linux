@@ -57,6 +57,18 @@ RAID解决的问题
 - 空间利用率：1/2
 - 至少需要4块
 
+#### 案例：创建RAID10
+
+```shell
+# 首先由四块硬盘,用mdadm创建
+# mdadm -Cv /dev/md0 -n 4 -l 10 /dev/sdb /dev/sdc/ dev/sdd/ /dev/sde
+mdadm -Cv /dev/md0 -n 4 -l 10 /dev/sd[b-e]
+# 查看基本信息
+mdadm -Q /dev/md0
+# mdadm -D /dev/md0 查看详细信息details，看是否同步好
+
+```
+
 01:
 	性能表现：读、写提升
 	冗余能力：有
@@ -73,41 +85,78 @@ jbod:
 	空间利用率：100%
 	至少需要2块
 
-
-
 逻辑RIAD：
 /dev/md0
 /dev/md1
 
+## mdadm 管理磁盘阵列
 
-md: 
-mdadm: 将任何块设备做成RAID
+md adminstration，将任何块设备做成RAID
+
 模式化的命令：
-	创建模式
-		-C 
-			专用选项：
-				-l: 级别
-				-n #: 设备个数
-				-a {yes|no}: 是否自动为其创建设备文件
-				-c: CHUNK大小, 2^n，默认为64K
-				-x #: 指定空闲盘个数
-	管理模式
-		--add, --remove, --fail
-		mdadm /dev/md# --fail /dev/sda7
-	监控模式
-		-F
-	增长模式
-		-G
-	装配模式
-		-A
 
-查看RAID阵列的详细信息
+### 创建模式
+
+-C 创建阵列卡
+
+专用选项：
+
+- -v 过程可视
+- -n #: 设备个数为#
+- -l #: 级别为#
+- -x #: 指定空闲盘(热备盘)个数为#
+- -c: CHUNK大小, 2^n，默认为64K
+- -a {yes|no}: 是否自动为其创建设备文件
+
+### 管理模式
+
+- -f --fail 使失效
+- -r --remove 
+- -a --add
+
+替换热备盘
+```shell
+# 使失效
+mdadm -f /dev/md0 /dev/sdc
+# 查看，等待热备盘同步完成
+mdadm -D /dev/md0
+# 移除
+mdadm -r /dev/md0 /dev/sdc
+# 查看
+mdadm -D /dev/md0
+# 添加硬盘，卸载原来RAID组，并查看
+umount /dev/md0
+df -h
+# 添加热备盘
+mdadm /dev/md0 -a /dev/sdc
+# 挂载,并查看
+mouont -a
+df -h
+```
+
+### 监控模式
+
+-F
+
+### 增长模式
+
+-G
+
+### 装配模式
+
+-A
+
+### 查看RAID阵列的详细信息
+
 mdadm -D /dev/md#
+
 	--detail
-	
-停止阵列：
-	mdadm -S /dev/md#
-		--stop
+
+### 停止阵列
+
+mdadm -S /dev/md#
+
+	--stop
 
 创建一个空间大小为10G的RAID5设备；其chuck大小为32k；要求此设备开机时可以自动挂载至/backup目录；
 
