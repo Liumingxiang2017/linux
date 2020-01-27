@@ -794,22 +794,25 @@ Apache可以基于源主机名、源IP地址或源主机上的浏览器特征等
 [root@linuxprobe ~]# echo "Successful" > /var/www/html/server/index.html
 第2步：打开httpd服务的配置文件，在第129行后面添加下述规则来限制源主机的访问。这段规则的含义是允许使用Firefox浏览器的主机访问服务器上的首页文件，除此之外的所有请求都将被拒绝。使用Firefox浏览器的访问效果如图10-18所示。
 
+```shell
 [root@linuxprobe ~]# vim /etc/httpd/conf/httpd.conf
 ………………省略部分输出信息………………
 129 <Directory "/var/www/html/server">
 130 SetEnvIf User-Agent "Firefox" ff=1
+# set environment if
 131 Order allow,deny
 132 Allow from env=ff
 133 </Directory>
 ………………省略部分输出信息………………
 [root@linuxprobe ~]# systemctl restart httpd
 [root@linuxprobe ~]# firefox
-第10章 使用Apache服务部署静态网站。第10章 使用Apache服务部署静态网站。
+```
 
 图10-18  火狐浏览器成功访问
 
 除了匹配源主机的浏览器特征之外，还可以通过匹配源主机的IP地址进行访问控制。例如，我们只允许IP地址为192.168.10.20的主机访问网站资源，那么就可以在httpd服务配置文件的第129行后面添加下述规则。这样在重启httpd服务程序后再用本机（即服务器，其IP地址为192.168.10.10）来访问网站的首页面时就会提示访问被拒绝了，如图10-19所示。
 
+```shell
 [root@linuxprobe ~]# vim /etc/httpd/conf/httpd.conf
 ………………省略部分输出信息………………
 129 <Directory "/var/www/html/server">
@@ -819,5 +822,5 @@ Apache可以基于源主机名、源IP地址或源主机上的浏览器特征等
 ………………省略部分输出信息………………
 [root@linuxprobe ~]# systemctl restart httpd
 [root@linuxprobe ~]# firefox
-第10章 使用Apache服务部署静态网站。第10章 使用Apache服务部署静态网站。
+```
 图10-19  因IP地址不符合要求而被拒绝访问
