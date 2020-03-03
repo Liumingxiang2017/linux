@@ -1,9 +1,5 @@
-# vscode，git提交push，需要每次都输入账号密码username,password
+# vscode，git提交push免密
 
-配置name，Email
-
-git config --global user.name "huachuan"
-git config --global user.email hc.5@qq.com
 解决：每次提交都要输入username,password
 
 当前仓库
