@@ -1,4 +1,5 @@
-vscode，git提交push，需要每次都输入账号密码username,password
+# vscode，git提交push，需要每次都输入账号密码username,password
+
 配置name，Email
 
 git config --global user.name "huachuan"
