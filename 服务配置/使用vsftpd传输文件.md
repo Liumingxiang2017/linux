@@ -23,6 +23,8 @@ ftp允许linux真实用户上传、下载、创建，并访问整个文件系统
 
 将真实用户的/etc/passwd中/bin/bash改成/sbin/nologin，用户就不可登录了。
 
+查看速度 hash
+
 ### 配置文件
 
 anonymous_enable=YES，local_enable=YES 默认用户ftp无需密码登录，目录为/var/ftp/，只能下载不能上传。匿名用户已经使用了chroot功能。
