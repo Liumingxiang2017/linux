@@ -17,7 +17,7 @@ nano，sed
 命令-->输入：
 
 	i: 在当前光标所在字符的前面，转为输入模式；
-	a: 在当前光标所在字符的后面，转为输入模式；
+	a: 在当前光标所在字符的后面增加（add），转为输入模式；
 	o: 在当前光标所在行的下方，新建一行，并转为输入模式；
 	
 	I：在当前光标所在行的行首，转换为输入模式
@@ -65,6 +65,8 @@ ctrl+ww 切换窗口
 w或W  |  将光标移动到下一单词
  x    |  删除光标所在处的字符
  X    |  删除光标前的字符
+ dw   |  删除光标所在的一个单词word
+ d$   |  删除光标到行尾
  dd   |  删除光标所在行
 ndd   |  从光标所在行向下删除n行，为数字
 dG    |  删除光标所在行到末尾
@@ -73,6 +75,7 @@ dG    |  删除光标所在行到末尾
  R    |  从光标处向后替换，按Esc结束
  u    |  取消上步的操作
  U    |  取消目前的所有操作
+ y    |  复制选中的内容到剪贴板
  yy，Y   |  复制光标所在行
  nyy，nY |  复制光标所在行以下n行
  p    |  将复制或者删除的内容放在光标所在行的下行
@@ -116,7 +119,12 @@ dG    |  删除光标所在行到末尾
  :nu       |   跳转到第nu行
  :n1,n2d   |   删除n1到n2行 
  :%s/old/new/g | 替换
- :r filename | 导入文件
+ :r filename | 插入文件
+
+:r !ls 插入ls命令的结果
+:r !nl % 插入对当前文本编号的结果。（nl表示对文件编号，%表示当前文件）
+
+:1,4s/old/new/g 
 
 一、打开文件
 
@@ -243,10 +251,14 @@ ADDR1,ADDR2s@PATTERN@string@gi
 %：表示全文
 
 
-练习：将/etc/yum.repos.d/server.repo文件中的ftp://instructor.example.com/pub替换为http://172.16.0.1/yum
+练习：
 
+将/etc/yum.repos.d/server.repo文件中的ftp://instructor.example.com/pub替换为http://172.16.0.1/yum
+
+```shell
 %s/ftp:\/\/instructor\.example\.com\/pub/http:\/\/172.16.0.1\/yum/g
 %s@ftp://instructor\.example\.com/pub@http://172.16.0.1/yum@g
+```
 
 文件内容如下：
 # repos on instructor for classroom use
@@ -322,7 +334,7 @@ vim -O : 垂直分割显示
 
 :set noic
 
-3、设定自动缩进
+3、设定自动缩进（对于程序员重要）
 :set autoindent
 :set ai
 :set noai
@@ -331,12 +343,31 @@ vim -O : 垂直分割显示
 :set hlsearch
 :set nohlsearch
 
-5、语法高亮
+5、语法高亮显示 （对于程序员重要）
 :syntax on
 :syntax off
+
+:set ignorecase 忽略大小写
+:set noignorecase 
 
 二十三、配置文件
 /etc/vimrc
 ~/.vimrc
 
-vim: 
+vim补充
+
+ctrl+g 显示所处行数，和位置占比
+
+快操作
+
+按ctrl+v，进入可视块状态，按j向下，l向右，定义一个块，x删除块
+
+按v进入可视状态，j向下选择行
+
+
+F1 在任何模式下进入帮助模式，在帮助模式下 :help w 针对w命令查看帮助信息
+
+emacs 
+
+以前被称为编辑器之神，特点：全面，复杂，大量快捷键。可以写代码，编译程序，发邮件，甚至打游戏，几乎等于一个系统。
+
