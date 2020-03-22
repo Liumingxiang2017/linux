@@ -1,8 +1,8 @@
-# DNS
+# DNS  动态域名解析（Domain Name System）
 
 ip与域名解析
 
-通过本地/etc/hosts文件可以进行解析
+单机是通过本地 /etc/hosts 文件可以进行解析。
 
 ipaddr 域名
 
@@ -17,3 +17,5 @@ rpm -ql bind-chroot
 service named start
 cp /usr/share/system-config-bind/profiles/default/named.conf /var/named/chroot/etc/named/
 ```
+
+PPP（Point-to-Point,点到点协议）
