@@ -1,0 +1,126 @@
+在sublime中 ！+tab自动创建h5框架。
+
+定义网页语言为英文，定义网页成中文是'lang="zh-CN"',不定义也不影响。
+
+字符实体
+< > 分别对应&lt;和&gt;
+空格对应&nbsp;在html中多个空格被解析成一个空格。
+
+HTML的超链接
+网页上的超链接一般分为三种：
+1.一种是 绝对URL 的超链接。URL(Uniform Resource Locator)就是统一资源定位符，简单讲就是是网络上的一个站点、网页的完整路径
+2.第二种是 相对URL 的超链接。如将自己网页上的某一段文字或某标题链接到
+同一网站的其他网页上去；
+3.还有种称为同一网页的超链接，这种超链接又叫做书签。
+
+HTML列表
+有序列表
+<ol>
+	<li></li>
+	<li></li>
+	<li></li>
+</ol>
+无序列表
+<ul>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+表格
+<table border="1">
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+
+	</tr>
+	<tr>
+		<td rowspan="2"></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="2"></td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+HTML表单（Form）常用控件（Contrls）
+input type="text"  单行文本输入框
+input type="submit"  将表单（Form）里的信息提交给表单里action所指向的文件
+input type="checkbox"  复选框
+input type="radio"  单选框
+input type="password"  密码输入框（输入的文字用*表示）
+select 下拉框
+textArea 多行文本输入框
+
+css概述
+为了让网页元素的样式更加丰富，也为了让网页的内容和样式能拆开，CSS
+由此思想而诞生，CSS是Cascading Style Sheets的首字母缩写，意思是
+层叠样式表。有了CSS，html中大部分样式的标签就废弃不用了，html只负责
+文档的结构和内容，表现形式完全交给CSS，html文档变得更加简洁。
+
+CSS页面引入方法：
+1.外联式：通过link标签，链接到外部样式表到页面中
+<link rel="stylesheet" type="text/css" href="css/main.css">
+2.嵌入式：通过style标签，在网页上创建嵌入的样式表。
+<style type="text/css">
+	div{ width:100px; height:100px; color:red}
+	......
+</style>
+3.内嵌式：通过标签的style属性，在标签上直接写样式。
+<div style="width:100px; height:100px; color:red ">......</div>
+
+css文本设置
+常用的应用文本的样式：
+color 设置文字的颜色，如：color:red;
+font-size 设置文字的大小，如：font-size:12px;
+font-family 设置文字的字体，如：font-family:'微软雅黑';
+font-style 设置文字是否倾斜，如：font-style:'normal';设置不倾斜，
+font-style:'italic';设置文字倾斜
+font-weight 设置文字是否加粗，如：font-weight:bold;设置加粗，
+font-weight:normal;设置不加粗
+line-height 设置文字的下划线，如text-decoration:none;将文字下划线去掉
+text-indent 设置文字的首行缩进，如text-indent:24px;设置首行文字缩进24px
+text-align 设置文字水平对其方式，如text-align:center 设置文字水平居中
+
+CSS选择器
+1.标签选择器
+此种选择器影响范围大
+
+2.id选择器
+通过id名来选择元素，元素的id名称不能重复，所以一个样式设置项只能对应页面上一个元素，
+id名一般给程序使用，所以不推荐id作为选择器
+
+#box{color:red}
+<div id="box">...</div>
+
+3.类选择器
+通过类名选择元素
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

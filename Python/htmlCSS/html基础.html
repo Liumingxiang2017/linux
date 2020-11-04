@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<!-- form定义一个表单区域，action属性定义表单数据提交的地址，
+	method属性定义提交的方式 -->
+	<form action="http://www..." method="get">
+		<!-- label标签定义表单控件的文字标注，input类型为
+		text定义一个单行文本输入框 -->
+		<p>
+			<label for="">姓名:</label><input type="text" name="username">
+		</p>
+
+		<!-- input类型为password定义一个密码输入框 -->
+		<p>
+			<label for="">密码:</label><input type="password">
+		</p>
+
+		<!-- input类型为radio定义了单选框 -->
+		<p>
+			<label for="">性别:</label>
+			<input type="radio" name="gender" value="0">男
+			<input type="radio" name="gender" value="1">女
+		</p>
+		
+		<!-- input类型为checkbox定义了多选框 -->
+		<p>
+			<label for="">爱好:</label>
+			<input type="checkbox" name="like" value="sing">唱歌
+			<input type="checkbox" name="like" value="run">跑步
+			<input type="checkbox" name="like" value="swiming">游泳
+		</p>
+
+		<!-- input类型为file定义上传照片或者文件等资源 -->
+		<p>
+			<label for="">照片:</label>
+			<input type="file" name="person_pic">
+		</p>
+
+		<!-- textarea定义多行文本输入 -->
+		<p>
+			<label for="">个人描述:</label>
+			<textarea name="about" id="" cols="30" rows="10"></textarea>
+		</p>
+
+		
+		<!-- select 定义下拉列表选择 -->
+		<p>
+			<label for="">籍贯:</label>
+			<select name="site" id="">
+				<option value="0">北京</option>
+				<option value="1">上海</option>
+				<option value="2">广州</option>
+				<option value="3">深圳</option>
+
+			</select>
+		</p>	
+		
+		<!-- input类型为submit定义提交按钮
+			还可以用图片空阿金替代submit按钮提交，一般会导致提交两次
+			不建议使用。如：
+			<input type="image" src="xxx.gif">
+		 -->
+		<p>
+			<input type="submit" name="" value="提交">
+
+
+		    <!-- input类型为reset定义重置按钮 -->
+		    <input type="reset" name="" value="重置">
+		</p>
+
+	</form>
+
+	<form action="http://xiachufang.com/html/choose.asp" method = "post">
+		<input type="checkbox" name="fruit" value="apple" >苹果<br>
+		<input type="checkbox" name="fruit" value="orange" >橘子<br>	
+		<input type="checkbox" name="fruit" value="apple" >芒果<br>	
+		<input type="submit" value="提交">
+	</form>
+
+	<p>
+		<a href="#C9">参见第9章</a>
+	</p>	
+
+	<a name="C1"><h2>第1章</h2></a>
+	<p>这里是第1章</p>
+
+	<a name="C2"><h2>第2章</h2></a>
+	<p>这里是第2章</p>
+
+	<a name="C3"><h2>第3章</h2></a>
+	<p>这里是第3章</p>
+
+	<a name="C4"><h2>第4章</h2></a>
+	<p>这里是第4章</p>
+
+	<a name="C5"><h2>第5章</h2></a>
+	<p>这里是第5章</p>
+
+	<a name="C6"><h2>第6章</h2></a>
+	<p>这里是第6章</p>
+
+	<a name="C7"><h2>第7章</h2></a>
+	<p>这里是第7章</p>
+
+	<a name="C8"><h2>第8章</h2></a>
+	<p>这里是第6章</p>
+
+	<a name="C9"><h2>第9章</h2></a>
+	<p>这里是第6章</p>
+
+	<a name="C10"><h2>第10章</h2></a>
+	<p>这里是第10章</p>
+
+</body>
+</html>

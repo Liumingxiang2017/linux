@@ -1,0 +1,171 @@
+模块
+
+1.Python中的模块
+有过C语言编程经验的朋友都知道在C语言中要引入sqrt这个函数，必须用语句"#include"
+引入math.h这个头文件，否则无法正常进行调用。那么Python中，如果要引用一些内置
+的函数改怎么处理呢？
+
+在Python中有一个概念叫做模块（module），这个和C语言中的头文件以及java中的包
+很类似，比如在python中要调用sqrt函数，必须用import关键之引入math这个模块，
+下面就来了解一下python中的模块。
+
+通俗的讲：模块就好比一个工具包，要想使用这个工具包中工具（就好比函数），就需要导入
+模块。
+
+2.import
+在python中用关键字import来引入某个模块，比如要引用模块math，就可以在文件最开始
+的地方用 import math来引入
+
+形如：
+import module1,module2...
+
+当解释器遇到import语句，如果模块在当前的搜索路径就会被导入。
+
+__name__这个变量，在python执行的时候会有一个默认的值
+1.如果是python xxx.py 那么此时这个变量的值为__main__
+2.如果其他py文件中，去import应用这个文件的话，那么此时这个__main__的值为
+文件的名字。
+
+python包
+
+把多个py文件放入一个文件夹，并加入__init__.py这个文件
+那么这个文件夹就是一个包
+
+这种每次用都要写模块名
+import random
+random.randint(1,5)
+
+只能使用import的内容
+from random import randint
+randint(1,5)
+
+这种引入重复的函数容易产生覆盖
+from test import *
+
+__all__
+__init__.py文件是空白的，有的会有__all__参数
+如果import的时候__init__.py是空白的，可以直接import
+到所有的函数。而如果__init__.py中定义了__all__，则
+import的时候只会导入__all__部分定义的内容。
+
+
+package1/
+	__init__.py
+	subPack1/
+		__init__.py
+		module_11.py
+		module_12.py
+		module_13.py
+	subPack2/
+		__init__.py
+		module_21.py
+		module_22.py
+		module_23.py
+
+比如:
+subPack1中的__init__.py文件中加入
+__all__ = ['module_13', 'module_12']
+
+然后进入python
+>>>from package1.subPack1 import *
+
+自己制作模块安装到系统中
+
+1.构建目录结构体如下
+setup.py
+suba
+	aa.py
+	bb.py
+	__init__.py
+subb
+	cc.py
+	dd.py
+	__init__.py
+
+2.编写setup.py,py_modules需知名所需包含的py文件
+from distutils.core import setup
+setup(name="xwp", version="1.0", discription="xwp's module", author="xingwenpeng", py_modules=['suba.aa', 'suba.bb', 'subb.cc', 'suba.dd'])
+
+3.构建模块
+python setup.py build
+
+构建后的目录结构
+build
+	lib.linux-i686-2.7
+	suba
+		aa.py
+		bb.py
+		__init__.py
+	subb
+		cc.py
+		dd.py
+		__init__.py
+setup.py
+suba
+	aa.py
+	bb.py
+	__init__.py
+subb
+	cc.py
+	dd.py
+	__init__.py
+
+4.生成发布压缩包
+python setup.py sdist
+打包后，生成最终发布压缩包xwp-1.0.tar.gz,目录结构
+build
+	lib.linux-i686-2.7
+	suba
+		aa.py
+		bb.py
+		__init__.py
+	subb
+		cc.py
+		dd.py
+		__init__.py
+dist
+	xwp-1.0.tar.gz
+MANIFEST
+setup.py
+suba
+	aa.py
+	bb.py
+	__init__.py
+subb
+	cc.py
+	dd.py
+	__init__.py
+
+模块的安装和使用
+1.安装的方式
+	1.找到模块的压缩包
+	2.解压 tar -zxvf xwp-1.0.tar.gz
+	3.进入文件夹
+	4.执行命令 sudo python setup.py install
+注意：
+	如果在install的时候，执行目录安装，可以使用 python setup.py install --prefix=安装路径
+2.模块的引入
+在程序中，使用from import即可完成对安装的模块使用
+
+from 模块名 import 模块名或者*
+
+
+静态方法和类方法
+1.类方法
+是类所拥有的方法，需要用修饰器@classmethod来标识其为类方法，对于类方法，第一个参数必须是类对象，一般以cls作为第一个参数（当然也可以用其他名称的变量作为第一个参数）但是大部分人洗过使用cls作为第一个参数的名字，就最好用cls，能够通过实例对象和类对象去访问。
+class People(object)
+	contry = 'china'
+	#类方法，用@classmethod来修饰
+	@classmethod
+	def getCountry(cls):
+		return cls.country
+
+2.静态方法
+需要通过修饰器@staticmethod来进行修饰，静态方法不需要多定义参数
+class People(object)
+	contry = 'china'
+	#静态方法
+	@staticmethod
+	def getCountry():
+		return People.country
+

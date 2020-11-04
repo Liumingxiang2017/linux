@@ -1,0 +1,93 @@
+Python应用方向：
+    Web Development:
+        You can use Python to creat web applications on many levels of complexity.
+        There are many excellent Python web frameworks including, Pyramid, Django and Flask, to name a few.
+        举例：google dropbox 豆瓣 知乎 果壳网 Minecraft youtube
+    Data Analysis:
+        Python is the leading language of choice for many data scientists.
+        Python has grown in popularity within this field, due to its excellent libraries including NumPy and Pandas and its superb libraries for data visualization like Matplotlib and Seaborn.
+    Machine Learning:
+        What if you could predict customer satisfaction or analyze what factors will affect household pricing or to predict stocks over the next few days, based on previous years data?
+        There are many wonderful libraries implementing machine learning algorithms such as Scikit-Learn, NLTK and TensorFlow.
+    Computer Vision:
+        You can do many interesting things such as Face detection, Color detection while using Opencv.
+    Raspberry Pi:
+        Raspberry Pi is a very tiny and affordable computer which was developed for education and has gained enormous popularity among hobbyistwith  do-it-yourself hardware and automation.
+        You can even build a robot and automate your home.
+        examples: 旋翼飞行器，遥控汽车，astro_pi
+    Game Development:
+        Create a video game using module Pygame.
+        Basically, you use Python to write the logic of the game.
+        PyGame application can run on Android devices.
+    Web Scraping:
+        If you need to grab data from a website but the site does not have an API to expose data, you can use Python to scraping data.
+        爬虫是网站资料的初始来源。
+    Writing Scripts:
+        If you're doing something manually and want to automate repetitive stuff, such as emails, it's not difficult to automate once you know the basics of this language.
+    GUI Development:
+        Build a GUI application (desktop app) using Python modules Tkinter, PyQt to su.
+    Browser Automation:
+        Perform some neat things such as opening a browser and posting a Facebook status, you can do it with Selenium with Python.
+        
+    THE BLACK SWAN 
+        黑天鹅效应：一只黑天鹅的结果，就是推翻前面一万只白天鹅的实证。一只黑天鹅的影响大于一万只白天鹅。
+        火鸡对饲养员的预测
+
+Python教育资源：
+    AUTOMATE THE BORING STUFF WITH PYTHON （web文本教程 youtube, scratch programming, scratch中文少儿教程）
+    视频：
+        MITOPENCOURSEWARE ocw.mit.edu 
+        coursera 南大ZHANG LI的教程用Python玩转数据 Data Processing Using Python
+        学院派：mit 耐得住性子沉得住气
+        实用派：newthinktank.com
+    廖雪峰的官方网站
+    Project Euler
+    COREYMS  develop design DIY
+    知乎：哪里能找到python的视频教程地址
+    马哥
+    网易云课堂
+
+    路线：
+        实用派路线出发建立兴趣——学院派路线系统学习高屋建瓴——按需学习精通深入
+
+Python学习法门：
+    学python和学数学一样，需要不断动手练习。
+    从生活中发现烦恼的重复的耗时的痛点，解决问题的过程是提交能力最好的路径。
+
+Python工具：
+    pycharm
+    youtube-dl
+        pip install youtube-dl
+        pip install --upgrade youtube-dl
+        pip install -U youtube-dl
+        youtube-dl -h
+        youtube-dl --help
+        youtube-dl 视频URL/视频播放列表URL
+        youtube-dl --playlist-start NUMBER
+        youtube-dl --playlist-end NUMBER
+        youtube-dl --proxy 127.0.0.1:8087'URL'
+        pip uninstall youtube-dl
+
+    类似视频下载工具you-get
+
+Python基础知识：
+    pycharm配置：
+        preference-->Editor-->Color Scheme-->Monokai
+                        --> font 20
+    pytcharm不需要说明字符类型
+    
+    Variable names start with a letter or _ and then can contain numbers
+
+    Names are case sensitive so name is not the same as Name
+
+    You can't use the following fo variable names:
+        and del from not while as elif global
+        or with assert else if pass yield break
+        except import print class in raise try
+        continue finally is return def for lambda
+    
+    Single line comments are ignored by the interpreter
+
+    选择比努力更重要！！！
+
+   

@@ -1,0 +1,210 @@
+需求：抓取某个网站或者某个应用的内容，提取游泳价值
+
+实现手段
+模拟用户在浏览器或者App应用上的操作，实现自动化程序。
+
+应用场景
+抢票神器
+微信投票刷票
+招聘信息数据分析
+地图
+
+爬虫基本原理
+当我们在浏览器中输入url后回车，发生了什么？
+1.查找域名对应IP地址
+	浏览器首先访问DNS（Domain Name System,域名系统），dns的主要工作就是把域名转换成相应的地址
+2.向IP对应的服务器发送请求
+3.服务器相应请求，发挥网页内容
+4.浏览器渲染网页内容
+
+浏览器是符合发送和接收这个数据的
+ HTTP协议（HyperText Transfer Protocol,超文本传输协议）目的是为了提供一种发布和接收HTML（HyperText Markup Language）页面的方法。
+ HTTPS（全程:HyperText Transfer Protocol over Secure Socket Layer）
+ 是一个以安全为目标的HTTP通道，简单来说就是HTTP的安全版。
+
+在python3中：urllib 和 urllib2 合并为url
+
+使用urllib爬去数据
+1.urlopen（）
+打开一个url的方法，返回一个文件对象，然后可以进行类似文件对象的操作
+
+#导入模块
+import urllib
+
+#打开指定的url，就好比操作本地文件一样
+f = urllib.urlopen('http://www.baidu.com')
+
+#读取html页面的第一行
+firstline = f.readline()
+
+说明:
+	read(),readline(),readlines(),fileno(),close() 这些方法使用方式和文件对象完全一样
+
+	info() 返回一个httplib.HTTPMessage对象，表示远程服务器返回的头信息
+
+	getcode():返回Http状态码。如果是http请求，200请求成功，404网址未找到
+
+	geturl() 返回请求的url
+
+	如果urlopen()不能够成功打开一个url，那么会产生一个异常，此时可以通过try来捕捉然后处理
+
+2. urlretrieve()
+urlretrieve方法将url定位到的html文件下载到你的硬盘中
+如果不指定filename，则会存为临时文件。
+urlretrieve()返回一个二元组（filename,mine_hdrs）
+示例urllib.urlretrieve("网址",filename="/home/python/Desktop/baidu.jpg")
+
+使用正则获取页面中的指定信息
+import re
+
+通过时间间隔来防止被封
+import time
+time.sleep(1)
+使用urllib2
+
+urlencode()
+大多数网站是动态网页，需要你动态地传递参数给它，它做出对应的响应。所以在访问的时候，我们需要传递数据给它。数据传送纷纷为POST和GET
+
+示例:
+import urllib
+params=urllib.urlencode({'t':'b','w':'python'})
+f=urllib.urlopen('http://zzk.cnblogs.com/s?%s'%params)
+f.read()
+
+GET方法
+import urllib
+params=urllib.urlencode({'t':'1','eggs':'2','bacon':'0'})
+f=urllib.urlopen('http://python.org/query?%s'%params)
+f.read()
+
+正常网站的登陆都是POST
+
+POST方法
+import urllib
+params=urllib.urlencode({'spam':'1','eggs':'2','bacon':'0'})
+f=urllib.urlopen('http://python.org/query',params)
+f.read()
+
+
+urllib2的使用以及伪造请求头部
+
+Cookie
+Network-->Header-->respnse Headers
+set-Cookie：服务器给的值（用于区分用户）
+没登录发送的数据会少一部分数据，让用户登陆，登陆后浏览器会将一个Cookie值发送过来，
+以后浏览器每次都会把这个值发送
+
+Network-->Header-->request Headers
+User-Agent
+
+urlopen()上传的时候只有url
+通过伪造请求头信息，伪装成普通的浏览器。
+如何上传request Headers：
+
+	#coding=utf-8
+
+	import urllib2
+	import sys
+
+	#抓取网页内容-发送报头-1
+	url = "http://www.phpno.com"
+	send_headers = {
+		'host':'www.phpno.com',
+		'User-Agent':'Mozilla/5.0(window NT 6.2; RV:16.0) Gecko/20100101 Firefox/16.0',
+		'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+		'Connection':'keep-alive'
+	}
+
+	req = urllib2.Request(url,headers=send_headers)
+
+	r = urllib2.urlopen(req)
+
+	#通过help(urllib2)可以查看这个模块中的很多类和方法
+
+
+使用Beautiful Soup解析数据
+
+1.Beautiful Soup的简介
+简单来说Beautiful Soup是python的一个库，主要功能是从网页抓取信息。官方解释如下：
+	Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过分析文档为用户提供需要抓取的数据，因为简单所以不需要多少代码就可以写一个完整的程序。Beautiful Soup自动将输入文档转换为Unicode编码，输出文档转换为utf-8编码。你不需要考虑编码方式，除非文档没有指定一个编码方式，这时Beautiful Soup就不能自动识别编码方式了。然后你仅仅需要说明改一下原始编码方式就可以了。Beautiful Soup已经成为和xml、html6lib一样出色的python解释器，为用户灵活提供不同的解析策略和强劲的速度。
+
+2.安装
+下载地址：http://pypi.python.org/pypi/beautifulsoup4/4.3.2
+官方文档：http://beautifulsoup.readthedocs.org/zh_CN/latest
+
+1.tar zxvf beautifulsoup4-4.3.2.tar.gz
+2.进入文件夹
+3.python setup.py install
+
+3.使用 
+from bs4 import BeautifulSoup
+
+我们创建一个字符串，后面的例子我们会使用它来演示
+	html = """html代码"""
+
+创建BeautifulSoup对象
+	soup = BeautifulSoup(html)
+
+下面我们我们来打印一下soup对象的内容，格式化输出
+	print soup.prettify()
+
+3.1找标签
+有个缺陷：只找第一个！！！
+
+直接打印标签
+	print soup.title
+	结果是<title>The Dormouse's story</title>
+	print soup.head
+	print soup.a
+
+对于标签，它有两个重要的属性，是name和attrs：
+	soup对象本身比较特殊它的name即为[document]
+	print soup.name
+	#[document]
+
+	print soup.head.name
+	#head
+
+	把p标签所有属性打印出来，得到的类型是一个字典。
+	print soup.p.attrs
+	#{'class':['title'],'name':'dromouse'}
+
+	获取某个属性
+	print soup.p['class']
+	#['title']
+
+3.2获取文字
+	获取标签内部的文字
+	print soup.p.string
+	#The Dormouse's story
+
+3.3 CSS选择器
+在CSS中，标签名不加任何修饰，类名前加.，id名前加#，这里我们也可以利用类似的方式，用到的方法是soup.select(),返回类型是list
+
+3.3.1通过标签名查找
+	print soup.select('title')
+	#[<title>The Dormouse's story</title>]
+
+3.3.2通过类名查找
+	print soup.select('.classname')
+	#[list_element1,list_element2...]
+
+3.3.2通过id名查找
+	print soup.select('#id')
+	#[list_element1,list_element2...]
+
+3.3.4组合查找
+组合查找即和写css文件时，标签名与类名、id名组合原理一样，用空格隔开
+	print soup.select('p #link1')
+
+3.3.5直接子标签查找
+	print soup.select('head > title')
+	#[<title>The Dormouse's story</title>]
+
+3.3.6属性查找
+查找时还可以加入属性元素，属性用中括号括起来。注意属性和标签属于同一节点
+	print soup.select('a[class="sister"]')
+	print soup.select('a[href="xxx"]')
+同样属性仍然可以和上述查询方式组合，不在同一节点的空格隔开
+
+以上select方法返回的结果都是列表，可以遍历输出，然后用get_text()方法获取内容
