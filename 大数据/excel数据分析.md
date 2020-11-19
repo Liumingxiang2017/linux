@@ -89,3 +89,5 @@ select * from info;
 ## EXCEL函数
 
 中位数：MEDIAN
+
+公式
