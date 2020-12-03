@@ -32,6 +32,8 @@
 
 在当前行上方插入一行:   Ctrl+Shift+Enter
 
+缩进去掉制表符：  shift+tab
+
 ### (2) 光标相关
 
 删除当前行：ctrl+shift+k

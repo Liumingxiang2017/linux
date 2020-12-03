@@ -194,7 +194,60 @@ utf8mb4: 是通用字符集的扩展，能够存储emoji，比如社交网站，
 
 1. 连接数据：mysql -uroot -p
 2. 退出：quit 或 exit
-3. 
+- 每条指令通过;或者\g结束
+- 查看版本： seletct version();
+- 显示当前时间：select now();
+- 修改输入提示符
+```sql
+prompt python> 
+prompt \U-\D> 
+```
+\U 使用用户，\D完整日期
+
+3. 数据库操作
+
+- 查看创建的数据库：show databases;
+- 查看当前使用的数据库：select database(); # NULL指的是空
+- 使用数据库：use database_name;
+- 创建数据库: create database database_name;
+- 指定字符集: create database database_name charset=utf8; # 必须是utf8字符集，如果是社交类网站则是utf8mb4
+- 查看数据库的创建语句：show create database database_name; 
+- 删除数据：drop database database_name; 如果数据库为默认latin字符集，最快的方法是直接删掉。
+
+4. 数据表的操作
+- 查看当前数据库下所有表：show tables；
+- 创建表：create table table_name (字段名 字段类型 字段约束); 例：
+```sql
+create table students (
+    id int unsigned primary key auto_increment,
+    name varchar(10) not null,
+    age tinyint unsigned default 0,
+    high decimal(5,2) default 0.00,
+    gender enum('男','女','中性','保密') default '保密',
+    class_id int unsigned not null
+);
+
+# int unsigned 无符号整形
+# primary key 主键
+# auto_increment 自动增长
+# not null 非空
+# enum() 枚举
+# 字段之间用逗号隔开，最后一个字段不加逗号
+```
+
+- 查看表的创建语句：show create table table_name; 
+- 查看表结构：desc table_name;
+- 修改表结构：alter add/modify/change
+    - 添加字段 alter table table_name add 列名 类型/约束；
+    - 修改字段，不重命名 alter table table_name modify 列名 类型/约束；
+    - 修改字段，重命名 alter table table_name change 原列名 新列名 类型/约束；
+    - 删除字段：alter table table_name drop 字段名；
+- 删除表：drop table table_name;
+
+5. 数据增删改查curd
+- 增加 insert
+    - insert [into] table_name values (value1,value2...)
+
 
 
 
