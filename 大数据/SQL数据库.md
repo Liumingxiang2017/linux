@@ -226,13 +226,13 @@ create table students (
     gender enum('男','女','中性','保密') default '保密',
     class_id int unsigned not null
 );
-
-# int unsigned 无符号整形
-# primary key 主键
-# auto_increment 自动增长
-# not null 非空
-# enum() 枚举
-# 字段之间用逗号隔开，最后一个字段不加逗号
+-- “-- ” 两条横线加一个空格表示注释
+-- int unsigned 无符号整形
+-- primary key 主键
+-- auto_increment 自动增长
+-- not null 非空
+-- enum() 枚举
+-- 字段之间用逗号隔开，最后一个字段不加逗号
 ```
 
 - 查看表的创建语句：show create table table_name; 
@@ -247,7 +247,23 @@ create table students (
 5. 数据增删改查curd
 - 增加 insert
     - insert [into] table_name values (value1,value2...)
+    - 全列插入 值和表的字段的顺序一一对应
+    - 占位符：只有主键字段才有占位符，0、default、NULL
+
+- 指定列插入
+    - 值和列一一对应
+    - insert into table_name (列1...) values (值1...)
+
+- 多行插入 批量插入
+    - insert into table_name (列1...) values  (值1...), (值1...)...
+
+修改 update
+- where 表示修改范围
+- update 表名 set 列1=值1，列2=值2... where 条件
 
 
+删除 delete
+- 物理删除
+- delete from table_name where 条件;
 
-
+查询所有列 select * from table_name;
