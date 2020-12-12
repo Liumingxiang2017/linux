@@ -86,14 +86,6 @@ bashrc：定义本地变量、命令别名
 
 #！魔数行，制定解释器位置
 
-## 光标跳转快捷键
-
-Ctrl+a：跳到命令行首
-Ctrl+e：跳到命令行尾
-Ctrl+u: 删除光标至命令行首的内容
-Ctrl+k: 删除光标至命令行尾的内容
-Ctrl+l: 清屏
-
 ## 命令历史 
 命令历史是shell提供的功能。
 
@@ -203,17 +195,30 @@ bash使用功能特殊变量$?保存最近一条命令的执行状态结果
 
 ## 命令别名
 
-alias 设置别名
+alias 设置别名 
 
-alias CMDALIAS='COMMAND [options] [arguments]'
+type alias: a shell builtin
 
-在shell中定义的别名仅在当前shell生命周期中有效；别名的有效范围仅为当前shell进程；
+1. alias 显示当前shell进程所有可用命令别名
+2. alias CMDALIAS='COMMAND [options] [arguments]' 定义命令别名
 
-ualias 取消别名
+注意：在shell中定义的别名仅在当前shell生命周期中有效；别名的有效范围仅为当前shell进程；如果想永久有效，要定义在配置文件中：
+- 仅对当前用户有效：~/.bashrc，
+- 对所有用户有效：/etc/bashrc
 
-ualias CMDALIAS
+编辑配置文件不会立即生效需要重读。
 
-\CMD
+bash进程重读配置文件
+- source /path/to/config_file
+- . /path/to/config_file
+
+
+ualias 撤销别名
+
+- SYNOPSIS ualias [-a] CMDALIAS
+- -a 撤销所有别名
+
+如果别名同原命令名称，则要执行原命令，可使用 \CMD
 
 命令替换: $(COMMAND), 反引号：\`COMMAND\`
 
@@ -221,30 +226,146 @@ ualias CMDALIAS
 
 file-2013-02-28-14-53-31.txt
 
-alias设置要想重新打开终端依然生效需要编辑~/.bashrc
 
 ## bash支持的引号
 
-``: 命令替换
-"": 弱引用，可以实现变量替换
-'': 强引用，不完成变量替换
+- ``: 命令替换
+- "": 弱引用，可以实现变量替换
+- '': 强引用，不完成变量替换
 
-## 文件名通配符, globbing
+## glob/globbing 文件名通配符
 
-    man 7 glob
-    *: 任意长度的任意字符
-    ?：任意单个字符
-    []：匹配指定范围内的任意单个字符
-    [abc], [a-m], [a-z], [A-Z], [0-9], [a-zA-Z], [0-9a-zA-Z]
-    [:space:]：空白字符
-    [:punct:]：标点符号
-    [:lower:]：小写字母
-    [:upper:]: 大写字母
-    [:alpha:]: 大小写字母
-    [:digit:]: 数字
-    [:alnum:]: 数字和大小写字母
-    [^]: 匹配指定范围之外的任意单个字符
-    [[:alpha:]]*[[:space:]]*[^[:alpha:]]
+bash中用于实现文件名通配的机制。
+
+whatis glob
+
+man 7 glob
+
+通配类型
+- classes 类别
+- ranges 范围
+- complementation 补全
+
+通配符
+```
+- *: 任意长度的任意字符
+- ?：任意单个字符
+- []：匹配指定范围内的任意单个字符
+  - [abc], [a-z]不区分大小写, [A-Z]仅大写, [0-9]
+- [^]: 匹配指定范围之外的 任意单个字符
+  - [^0-9] 非数字
+  - [^0-9a-z] 特殊字符（非数字非字母）
+- 字符集合，需要在集合外再加上[]，比如[[:space:]]
+  - [:space:]：空白字符
+  - [:punct:]：标点符号
+  - [:lower:]：小写字母
+  - [:upper:]: 大写字母
+  - [:alpha:]: 大小写字母
+  - [:digit:]: 数字
+  - [:alnum:]: 数字和大小写字母
+  - [[:alpha:]]*[[:space:]]*[^[:alpha:]]
+```
+
+## bash快捷键
+
+- Ctrl+l: 清屏, 相当于clear
+- Ctrl+a：跳到命令行首ahead
+- Ctrl+e：跳到命令行尾end
+- Ctrl+u: 删除光标至命令行首的内容
+- Ctrl+k: 删除光标至命令行尾的内容
+
+## bash的I/O重定向及管道
+
+### 标准输入、输出、错误
+
+每个文件都有一个fd：file descriptor（文件描述符）。
+
+文件 |文件描述符
+-|:-:
+标准输入| 0（缺省是键盘 keyboard）
+标准输出| 1（缺省是屏幕 monitor）
+标准错误| 2（缺省是屏幕 monitor）
+
+### I/O重定向
+
+- I/O重定向：改变标准位置
+```
+输出重定向： COMMAND > NEW_POS , COMMAND >> NEW_POS
+  > 覆盖重定向，新内容会被追加至目标尾部
+    >| 强制覆盖
+  >> 追加重定向，目标文件中原内容会被清除；
+
+```
+- 禁止覆盖
+  - set -C：禁止将内容覆盖输出值已有文件中。
+  - set +C：关闭禁止覆盖功能。
+
+- 错误重定向
+  - 2>：覆盖重定向错误输出数据流
+  - 2>>：追加重定向错误输出数据流
+
+- 标准输出和错误输出各自定向至不同位置：COMMAND > /path/to/file.out 2> /path/to/file.err
+
+- 合并标准输出和错误输出为同一个输出流进行重定向：
+  - &> 覆盖重定向
+  - &>> 追加重定向
+
+- 输入重定向 <
+
+- HERE Docmentation 此处生成文档：<<
+  - cat << EOF: 以EOF作为结束符，输入
+  - cat >> /tmp/test.out << EOF
+
+举例
+- cat file1 file2 1>file.out 2>file.err
+  - 如果有标准输出输出到file.out,如果有标准错误输出到file.err
+- command > file.out 2> &1 
+  - 把标准输出和标准错误一起重定向到file
+- command < file1 > file2
+  - command命令以file1作为标准输入，file2作为标准输出
+- command << delimiter
+  - 从标准输入中读入，直到遇到delimiter分界符，常用分隔符为EOF（EndOfFile）
+- command<&m 
+  - 把文件描述符m作为标准输入
+- command>&m
+  - 把标准输出重定向到文件描述符m
+- command <&-
+  - 关闭标准输入
+
+## 管道
+COMMAND1 | COMMAND2 | COMMAND3 
+
+Note: 最后一个命令在当前shell进程的子进程中执行。
+
+### echo [option] string
+
+- -e 解析转义字符
+- -n 回车不换行，linux默认回车换行
+
+### read
+
+- 从键盘或者文件的某一行文本中读入信息，并将其赋给一个变量
+- read variable1 variable ... 按顺序赋值
+
+### cat 
+
+- -v 显示控制字符
+- cat [option] file1 file2 ...
+    - 同时输入file1 file2
+
+### tee
+从标准输入读数据，输出到标准输出，并拷贝到文件。这种情况在配合管道时有用，即能将输出到屏幕中且能输出到指定文件。
+
+tee [OPTIONS]... [files]...
+- tee -a files
+    - -a, --append (append to the given files, do not overwrite)
+
+### exec
+- 用来替代当前shell，使用时任何环境变量将被清除
+- exec command
+    - command 通常是一个脚本
+    - 只有在对文件描述符操作时，才不会覆盖当前shell
+
 
 ## 练习
 
