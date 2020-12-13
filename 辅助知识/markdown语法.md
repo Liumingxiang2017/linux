@@ -230,6 +230,8 @@ Typora now supports [YAML Front Matter](http://jekyllrb.com/docs/frontmatter/). 
 
 ### Table of Contents (TOC)
 
+在vscode中，安装Markdown TOC以后，在指定位置右键快捷菜单插入
+
 Input `[toc]` and press the `Return` key. This will create a  “Table of Contents” section. The TOC extracts all headers from the document, and its contents are updated automatically as you add to the document.
 
 ## Span Elements
