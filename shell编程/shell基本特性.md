@@ -1,10 +1,47 @@
-# bash
+# shell基本特性
+<!-- TOC -->
+
+1. [shell基本特性](#shell基本特性)
+    1. [命令历史](#命令历史)
+    2. [命令补全](#命令补全)
+    3. [路径补全](#路径补全)
+    4. [命令行展开](#命令行展开)
+    5. [命令的执行结果状态](#命令的执行结果状态)
+    6. [命令别名](#命令别名)
+    7. [bash支持的引号](#bash支持的引号)
+    8. [glob/globbing 文件名通配符](#globglobbing-文件名通配符)
+    9. [bash快捷键](#bash快捷键)
+    10. [bash的I/O重定向及管道](#bash的io重定向及管道)
+        1. [标准输入、输出、错误](#标准输入输出错误)
+        2. [I/O重定向](#io重定向)
+    11. [管道](#管道)
+        1. [echo [option] string](#echo-option-string)
+        2. [read](#read)
+        3. [cat](#cat)
+        4. [tee](#tee)
+        5. [exec](#exec)
+    12. [练习](#练习)
+    13. [后台永久处理](#后台永久处理)
+    14. [特殊字符](#特殊字符)
+    15. [运算符](#运算符)
+    16. [赋值运算符](#赋值运算符)
+2. [!/bin/bash](#binbash)
+3. [!/bin/bash](#binbash-1)
+4. [!/bin/bash](#binbash-2)
+5. [!/bin/bash](#binbash-3)
+6. [!/bin/bash](#binbash-4)
+
+<!-- /TOC -->
+
+1. 提供编程环境，shell程序提供了编程能力，解释执行。
+
+程序编程风格
+- 面向过程：以指令为中心，数据服务于指令。例如：Shell, C
+- 面向对象: 以数据为中心，指令服务于数据。由数据设计类，由类设计方法。例如：JAVA, Python（可面向过程，可面向对象）, perl, C++
 
 shell编程：
 
 shell作为编译器，解释器
-
-编程语言：机器语言、汇编语言、高级语言
 
 静态语言：编译型语言
 
@@ -17,10 +54,6 @@ shell作为编译器，解释器
     弱类型：变量用时声明，甚至不区分类型；
     边解释边执行
     PHP、SHELL、python、perl
-
-面向过程：Shell, C
-
-面向对象: JAVA, Python, perl, C++
 
 shell: 弱类型编程语言
 
@@ -84,7 +117,8 @@ profile: 定义环境变量、运行程序或脚本
 
 bashrc：定义本地变量、命令别名
 
-#！魔数行，制定解释器位置
+
+> #！魔数行，制定解释器位置
 
 ## 命令历史 
 命令历史是shell提供的功能。
@@ -211,7 +245,6 @@ type alias: a shell builtin
 bash进程重读配置文件
 - source /path/to/config_file
 - . /path/to/config_file
-
 
 ualias 撤销别名
 
@@ -386,34 +419,6 @@ tee [OPTIONS]... [files]...
 
     ls *[^[:alnum:]]*
 
-
-## chmod [who] operator [permission] file
-
-- who (u,g,o,a)
-- operator (+,-,=)
-- permission (r,w,x,s,t)
-
-## chmod mode file
-
-- r=4,w=2,x=1
-- u,g的s分别为4，2,t是1
-
-## chown [-R] user.group file/directory
-
-## chgrp group file/directory
-
-## umask
-
-    default value 022,file没有默认没有执行权限
-    /etc/profile($HOME/.profile $HOME/.bash_profile)
-    (cat /etc/profile |grep "umask")
-
-## 符号链接 (ln [-s] source-path target-path)
-
-## alias command=""
-
-- $HMOE/.bashrc 
-
 ## 后台永久处理
 
 - nohup command &
@@ -430,28 +435,6 @@ tee [OPTIONS]... [files]...
 - & ： 命令后台执行
 - 括号：创建成组的命令
 - 大括号：创建命令块
-
-## 系统设定
-
-默认输出设备：标准输出，STDOUT, 1
-
-默认输入设备：标准输入, STDIN, 0
-
-标准错误输出：STDERR, 2
-
-标准输入：键盘
-
-标准输出和错误输出：显示器
-
-2>: 重定向错误输出
-
-2>>: 追加方式
-
-&>: 重定向标准输出或错误输出至同一个文件
-
-<：输入重定向
-
-<<：Here Document
 
 ## 运算符
 
