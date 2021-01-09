@@ -3,6 +3,9 @@
 
 1. [shell基本特性](#shell基本特性)
     1. [bash的配置文件](#bash的配置文件)
+        1. [按功能划分，分为两类：](#按功能划分分为两类)
+        2. [shell登录方式：](#shell登录方式)
+        3. [配置文件读取顺序](#配置文件读取顺序)
     2. [命令历史](#命令历史)
     3. [命令补全](#命令补全)
     4. [路径补全](#路径补全)
@@ -75,20 +78,6 @@ shell: 弱类型编程语言
     99999: 24bit, 
     真、假
 
-站在用户登录的角度来说，SHELL的类型：
-
-登录式shell:
-
-    正常通常某终端登录
-    su - USERNAME 
-    su -l USERNAME
-
-非登录式shell:
-
-    su USERNAME
-    图形终端下打开命令窗口
-    自动执行的shell脚本
-
 ## bash的配置文件
 
 按生效范围划分，存在两类：
@@ -100,27 +89,47 @@ shell: 弱类型编程语言
   - ~/.bash_profile
   - ~/.bashrc
 
-profile类的文件：
+### 按功能划分，分为两类：
 
-    设定环境变量
-    运行命令或脚本
+- profile类的文件：为交互式登录的shell提供配置
+  - 全局：/etc/profile, /etc/profile.d/*.sh
+  - 个人：~/.bash_profile
+  - 功能：
+    - 设定环境变量
+    - 运行命令或脚本
+- bashrc类的文件：为非交互式登录的shell提供配置
+  - 全局：/etc/bashrc
+  - 个人：~/.bashrc
+  - 功用：
+    - 定义命令别名
+    - 设定本地变量
 
-bashrc类的文件：
+### shell登录方式：
+  
+站在用户登录的角度来说，SHELL的类型：
 
-    设定本地变量
-    定义命令别名
+- 交互式登录
+  - 直接使用终端输入账号密码登录
+  - 使用su - USERNAME或者su -l USERNAME切换的用户
+- 非交互式登录
+  - su USERNAME
+  - 图形终端下打开命令窗口
+  - 自动执行的shell脚本
 
-登录式shell如何读取配置文件？
+
+### 配置文件读取顺序
+
+- 交互式shell如何读取配置文件？
 
     /etc/profile --> /etc/profile.d/*.sh --> ~/.bash_profile --> ~/.bashrc --> /etc/bashrc
 
-非登录式shell如何配置文件?
+- 非交互式式shell如何配置文件?
 
-    ~/.bashrc --> /etc/basrc --> /etc/profile.d/*.sh
+    ~/.bashrc --> /etc/bashrc --> /etc/profile.d/*.sh
 
-profile: 定义环境变量、运行程序或脚本
-
-bashrc：定义本地变量、命令别名
+编辑配置文件定义的新配置的生效方式：
+1. 重新启动shell进程；
+2. 使用source或者.命令；
 
 shell脚本：文本文件
 写明解释器路径：
