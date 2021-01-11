@@ -8,6 +8,9 @@
     4. [命令模式](#命令模式)
     5. [编辑模式](#编辑模式)
     6. [末行模式](#末行模式)
+        1. [地址定界](#地址定界)
+        2. [查找](#查找)
+        3. [查找并替换](#查找并替换)
     7. [按功能分类：](#按功能分类)
         1. [打开文件](#打开文件)
         2. [关闭文件](#关闭文件)
@@ -26,6 +29,11 @@
             8. [撤消最近一次撤消操作：Ctrl+r](#撤消最近一次撤消操作ctrlr)
             9. [重复前一次编辑操作](#重复前一次编辑操作)
         3. [可视化模式](#可视化模式)
+        4. [查找](#查找-1)
+        5. [查找并替换](#查找并替换-1)
+        6. [多文件模式](#多文件模式)
+        7. [单文件窗口分隔](#单文件窗口分隔)
+        8. [窗口分隔模式](#窗口分隔模式)
 
 <!-- /TOC -->
 
@@ -136,24 +144,49 @@ dG    |  删除光标所在行到末尾
 ## 末行模式
 
 内建命令行接口
-- 地址定界
-	- :start_pos,end_pos
-	- m: 具体第m行
-	- m,n: 从m行到n行
-	- m,+p: 从第m行到m+p行
-	- .: .表示当前行
-	- $：最后一行
-	- .,$-1：当前行到倒数第二行
-	- %：全文，相当于1,$
-	- /pat1/,/pat2/：从第一次被pat1模式匹配到的行开始，一直到第一次被pat2匹配到的行结束
-	- #,/pat/
-	- /pat/,$
+
+### 地址定界
+- :start_pos,end_pos
+- m: 具体第m行
+- m,n: 从m行到n行
+- m,+p: 从第m行到m+p行
+- .: .表示当前行
+- $：最后一行
+- .,$-1：当前行到倒数第二行
+- %：全文，相当于1,$
+- /pat1/,/pat2/：从第一次被pat1模式匹配到的行开始，一直到第一次被pat2匹配到的行结束
+- #,/pat/
+- /pat/,$
 	
 使用方式：地址定界后，后跟一个编辑命令
 - d
 - y
 - w /path/to/somewhere 把定界范围内的行另存至指定文件中
 - r /paht/from/somefile 在指定位置插入指定文件中的所有内容
+
+### 查找
+
+- /PATTERN 从当前光标所在处向文件尾部查找
+- ?PATTERN 从当前光标所在处向文件首部查找
+
+- n：与命令同方向
+- N：与命令反方向
+
+### 查找并替换
+
+s: 在末行模式下完成查找替换操作
+
+地址定界s/要查找的内容/要替换为的内容/修饰符
+
+- 要查找的内容：可以使用模式
+- 替换为的内容：不能使用模式，但可以使用\1,\2,...等后向引用符号，还可以使用“&”引用前面查找到的整个内容
+- 修饰符：
+	- i: 忽略大小写
+	- g：全局替换，默认情况下，每一行只替换第一次出现；
+- 分隔符/：可以替换为其他字符，s@@@ s###
+
+
+可以配合地址定界进行查找替换。
 
 
 命令      | 说明
@@ -343,79 +376,59 @@ R: 替换模式
 - v: 按字符选取
 - V：按矩形选取，整行选定
 
-十四、查找
+### 查找
 /PATTERN
 ?PATTERN
 	n 向下查找
 	N 向上查找，等于 shift+n
 
-十五、查找并替换
+### 查找并替换
 在末行模式下使用s命令
 ADDR1,ADDR2s@PATTERN@string@gi
 1,$
 %：表示全文
 
 
-练习：
+### 多文件模式
 
-将/etc/yum.repos.d/server.repo文件中的ftp://instructor.example.com/pub替换为http://172.16.0.1/yum
+使用vim编辑多个文件
 
-```shell
-%s/ftp:\/\/instructor\.example\.com\/pub/http:\/\/172.16.0.1\/yum/g
-%s@ftp://instructor\.example\.com/pub@http://172.16.0.1/yum@g
-```
-
-文件内容如下：
-```
-# repos on instructor for classroom use
-
-# Main rhel5 server
-[base]
-name=Instructor Server Repository
-baseurl=ftp://172.16.0.1/pub/Server
-gpgcheck=0
-
-# This one is needed for xen packages
-[VT]
-name=Instructor VT Repository
-baseurl=ftp://172.16.0.1/pub/VT
-gpgcheck=0
-
-# This one is needed for clustering packages
-[Cluster]
-name=Instructor Cluster Repository
-baseurl=ftp://172.16.0.1/pub/Cluster
-gpgcheck=0
-
-# This one is needed for cluster storage (GFS, iSCSI target, etc...) packages
-[ClusterStorage]
-name=Instructor ClusterStorage Repository
-baseurl=ftp://172.16.0.1/pub/ClusterStorage
-gpgcheck=0
-```
-
-十六、使用vim编辑多个文件
 vim FILE1 FILE2 FILE3
-:next 切换至下一个文件
-:prev 切换至前一个文件
-:last 切换至最后一个文件
-:first 切换至第一个文件
+
+vim /tmp/{file1,file2,file3} 命令行展开
+
+- :next 切换至下一个文件
+- :prev 切换至前一个文件
+- :last 切换至最后一个文件
+- :first 切换至第一个文件
 
 退出
+:wall 保存所有
+:qall 退出所有
+
 :qa 全部退出
 
-十七、分屏显示一个文件
-Ctrl+w, s: 水平拆分窗口
-Ctrl+w, v: 垂直拆分窗口
+### 单文件窗口分隔
+
+分屏显示一个文件
+
+- Ctrl+w, s: 水平拆分窗口 split
+- Ctrl+w, v: 垂直拆分窗口 vertical
 
 在窗口间切换光标：
 Ctrl+w, ARROW
 
 :qa 关闭所有窗口
 
-十八、分窗口编辑多个文件
-vim -o : 水平分割显示
-vim -O : 垂直分割显示
+### 窗口分隔模式
+
+分窗口编辑多个文件 vim -o|-O file1 file2 ...
+- vim -o : 水平分割显示
+- vim -O : 垂直分割显示
+
+在窗口键切换，ctrl+w, arrow
+
+配合单文件切割，
 
 十九、将当前文件中部分内容另存为另外一个文件
 末行模式下使用w命令
@@ -483,3 +496,42 @@ emacs
 
 以前被称为编辑器之神，特点：全面，复杂，大量快捷键。可以写代码，编译程序，发邮件，甚至打游戏，几乎等于一个系统。
 
+
+
+练习：
+
+将/etc/yum.repos.d/server.repo文件中的ftp://instructor.example.com/pub替换为http://172.16.0.1/yum
+
+```shell
+%s/ftp:\/\/instructor\.example\.com\/pub/http:\/\/172.16.0.1\/yum/g
+%s@ftp://instructor\.example\.com/pub@http://172.16.0.1/yum@g
+```
+
+文件内容如下：
+```
+# repos on instructor for classroom use
+
+# Main rhel5 server
+[base]
+name=Instructor Server Repository
+baseurl=ftp://172.16.0.1/pub/Server
+gpgcheck=0
+
+# This one is needed for xen packages
+[VT]
+name=Instructor VT Repository
+baseurl=ftp://172.16.0.1/pub/VT
+gpgcheck=0
+
+# This one is needed for clustering packages
+[Cluster]
+name=Instructor Cluster Repository
+baseurl=ftp://172.16.0.1/pub/Cluster
+gpgcheck=0
+
+# This one is needed for cluster storage (GFS, iSCSI target, etc...) packages
+[ClusterStorage]
+name=Instructor ClusterStorage Repository
+baseurl=ftp://172.16.0.1/pub/ClusterStorage
+gpgcheck=0
+```
