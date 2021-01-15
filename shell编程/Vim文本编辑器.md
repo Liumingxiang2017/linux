@@ -34,6 +34,10 @@
         6. [多文件模式](#多文件模式)
         7. [单文件窗口分隔](#单文件窗口分隔)
         8. [窗口分隔模式](#窗口分隔模式)
+    1. [定制vim的工作特性](#定制vim的工作特性)
+        1. [配置文件](#配置文件-1)
+        2. [末行模式：当前vim进程有效](#末行模式当前vim进程有效)
+    2. [vim补充](#vim补充)
 
 <!-- /TOC -->
 
@@ -44,8 +48,6 @@ Vim: Visual Interface iMproved 文本编辑器，全屏编辑器，模式化编�
 文本编辑器种类：
 - 行编辑器：sed
 - 全屏编辑器：nano, vi
-
-自学命令：vimtutor
 
 ## Vim模式
 
@@ -159,10 +161,13 @@ dG    |  删除光标所在行到末尾
 - /pat/,$
 	
 使用方式：地址定界后，后跟一个编辑命令
-- d
-- y
-- w /path/to/somewhere 把定界范围内的行另存至指定文件中
-- r /paht/from/somefile 在指定位置插入指定文件中的所有内容
+- :d
+- :y
+- :w /path/to/somewhere 把定界范围内的行另存至指定文件中
+- :r /paht/from/somefile 在指定位置插入指定文件中的所有内容
+
+:1,4s/old/new/g 
+
 
 ### 查找
 
@@ -213,8 +218,6 @@ s: 在末行模式下完成查找替换操作
 
 :r !ls 插入ls命令的结果
 :r !nl % 插入对当前文本编号的结果。（nl表示对文件编号，%表示当前文件）
-
-:1,4s/old/new/g 
 
 ## 按功能分类：
 
@@ -430,51 +433,57 @@ Ctrl+w, ARROW
 
 配合单文件切割，
 
-十九、将当前文件中部分内容另存为另外一个文件
-末行模式下使用w命令
-:w
-:ADDR1,ADDR2w /path/to/somewhere
 
-二十、将另外一个文件的内容填充在当前文件中
-:r /path/to/somefile
 
 二十一、跟shell交互
 :! COMMAND
 
-二十二、高级话题
+
+## 定制vim的工作特性
+
+### 配置文件
+永久有效
+- 全局：/etc/vimrc
+- 个人：~/.vimrc, 该文件不存在，需要自行创建，最对个人用户有效
+
+### 末行模式：当前vim进程有效
+
 1、显示或取消显示行号
-:set number
-:set nu
+- :set number
+- :set nu 显示行号简写
+- :set nonumber
+- :set nonu
 
-:set nonu
-
-2、显示忽略或区分字符大小写
-:set ignorecase
-:set ic
-
-:set noic
+2、显示忽略或区分字符大小写，默认不忽略，因为linux本身区分大小写
+- :set ignorecase
+- :set ic
+- :set noignorecase 
+- :set noic
 
 3、设定自动缩进（对于程序员重要）
-:set autoindent
-:set ai
-:set noai
+- :set autoindent
+- :set ai
+- :set noai
 
 4、查找到的文本高亮显示或取消
-:set hlsearch
-:set nohlsearch
+- :set hlsearch
+- :set nohlsearch
 
 5、语法高亮显示 （对于程序员重要）
-:syntax on
-:syntax off
+- :syntax on
+- :syntax off
 
-:set ignorecase 忽略大小写
-:set noignorecase 
+6、括号匹配
+- :set showmatch 显示匹配，简写为 :set sm
+- :set nosm 取消匹配
 
-二十三、配置文件
-/etc/vimrc
-~/.vimrc
+## vim补充
 
-vim补充
+自学命令：vimtutor
+
+帮助：末行模式下
+- :help
+- :help keyword
 
 ctrl+g 显示所处行数，和位置占比
 
@@ -535,3 +544,6 @@ name=Instructor ClusterStorage Repository
 baseurl=ftp://172.16.0.1/pub/ClusterStorage
 gpgcheck=0
 ```
+
+如何设置tab缩进为4个字符？
+
