@@ -16,20 +16,11 @@
     9. [glob/globbing 文件名通配符](#globglobbing-文件名通配符)
     10. [bash快捷键](#bash快捷键)
     11. [测试脚本](#测试脚本)
-    12. [bash的I/O重定向及管道](#bash的io重定向及管道)
-        1. [标准输入、输出、错误](#标准输入输出错误)
-        2. [I/O重定向](#io重定向)
-    13. [管道](#管道)
-        1. [echo [option] string](#echo-option-string)
-        2. [read](#read)
-        3. [cat](#cat)
-        4. [tee](#tee)
-        5. [exec](#exec)
-    14. [练习](#练习)
-    15. [后台永久处理](#后台永久处理)
-    16. [特殊字符](#特殊字符)
-    17. [运算符](#运算符)
-    18. [赋值运算符](#赋值运算符)
+    12. [练习](#练习)
+    13. [后台永久处理](#后台永久处理)
+    14. [特殊字符](#特殊字符)
+    15. [运算符](#运算符)
+    16. [赋值运算符](#赋值运算符)
 2. [!/bin/bash](#binbash)
 3. [!/bin/bash](#binbash-1)
 4. [!/bin/bash](#binbash-2)
@@ -344,97 +335,6 @@ man 7 glob
 
 - bash -x script.sh：单步执行，调试执行
 
-## bash的I/O重定向及管道
-
-### 标准输入、输出、错误
-
-每个文件都有一个fd：file descriptor（文件描述符）。
-
-文件 |文件描述符
--|:-:
-标准输入| 0（缺省是键盘 keyboard）
-标准输出| 1（缺省是屏幕 monitor）
-标准错误| 2（缺省是屏幕 monitor）
-
-### I/O重定向
-
-- I/O重定向：改变标准位置
-```
-输出重定向： COMMAND > NEW_POS , COMMAND >> NEW_POS
-  > 覆盖重定向，新内容会被追加至目标尾部
-    >| 强制覆盖
-  >> 追加重定向，目标文件中原内容会被清除；
-
-```
-- 禁止覆盖
-  - set -C：禁止将内容覆盖输出值已有文件中。
-  - set +C：关闭禁止覆盖功能。
-
-- 错误重定向
-  - 2>：覆盖重定向错误输出数据流
-  - 2>>：追加重定向错误输出数据流
-
-- 标准输出和错误输出各自定向至不同位置：COMMAND > /path/to/file.out 2> /path/to/file.err
-
-- 合并标准输出和错误输出为同一个输出流进行重定向：
-  - &> 覆盖重定向
-  - &>> 追加重定向
-
-- 输入重定向 <
-
-- HERE Docmentation 此处生成文档：<<
-  - cat << EOF: 以EOF作为结束符，输入
-  - cat >> /tmp/test.out << EOF
-
-举例
-- cat file1 file2 1>file.out 2>file.err
-  - 如果有标准输出输出到file.out,如果有标准错误输出到file.err
-- command > file.out 2> &1 
-  - 把标准输出和标准错误一起重定向到file
-- command < file1 > file2
-  - command命令以file1作为标准输入，file2作为标准输出
-- command << delimiter
-  - 从标准输入中读入，直到遇到delimiter分界符，常用分隔符为EOF（EndOfFile）
-- command<&m 
-  - 把文件描述符m作为标准输入
-- command>&m
-  - 把标准输出重定向到文件描述符m
-- command <&-
-  - 关闭标准输入
-
-## 管道
-COMMAND1 | COMMAND2 | COMMAND3 
-
-Note: 最后一个命令在当前shell进程的子进程中执行。
-
-### echo [option] string
-
-- -e 解析转义字符
-- -n 回车不换行，linux默认回车换行
-
-### read
-
-- 从键盘或者文件的某一行文本中读入信息，并将其赋给一个变量
-- read variable1 variable ... 按顺序赋值
-
-### cat 
-
-- -v 显示控制字符
-- cat [option] file1 file2 ...
-    - 同时输入file1 file2
-
-### tee
-从标准输入读数据，输出到标准输出，并拷贝到文件。这种情况在配合管道时有用，即能将输出到屏幕中且能输出到指定文件。
-
-tee [OPTIONS]... [files]...
-- tee -a files
-    - -a, --append (append to the given files, do not overwrite)
-
-### exec
-- 用来替代当前shell，使用时任何环境变量将被清除
-- exec command
-    - command 通常是一个脚本
-    - 只有在对文件描述符操作时，才不会覆盖当前shell
 
 ## 练习
 
