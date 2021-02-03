@@ -39,30 +39,7 @@ usr universal shared read-only
 
 /usr/local/bin /usr/local/sbin /usr/local/lib /usr/local/etc /usr/local/man
 
-Redhat SUSE : RPM (Redhat Package Manager) , (RPM is Package Manager)
-Debian : dpt (debian package tools)
 
-yum : Yellowdog Update Modifier
-apt-get 
-
-yum repository
-
-createrepo
-
-XML eXtended Mark Language
-JSON 
-
-meta data
-primary.xml.gz
-
-/etc/yum.conf
-/etc/yum.repos.d/
-
-yum repolist 
-yum install -y 
-yum install --nogpgcheck
-
-yum localinstall [--nogpgcheck] filename
 
 gcc GNU C Complier,  C
 g++ C++
