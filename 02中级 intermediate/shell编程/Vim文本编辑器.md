@@ -224,6 +224,7 @@ s: 在末行模式下完成查找替换操作
 ### 打开文件
 
 - vim [OPTIONS] /path/to/somefile
+- vim file1 file2 同时打开两个文件
 - vim +n FILE :打开文件，并定位于第n行 
 - vim +: FILE :打开文件，定位至最后一行，或者vim + FILE
 - vim +/PATTERN FILE : 打开文件，定位至第一次被PATTERN匹配到的行的行首
