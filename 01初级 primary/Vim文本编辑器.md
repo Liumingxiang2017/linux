@@ -380,6 +380,8 @@ R: 替换模式
 - v: 按字符选取
 - V：按矩形选取，整行选定
 
+多行左右移动 shift+> shift+<
+
 ### 查找
 /PATTERN
 ?PATTERN
@@ -477,6 +479,9 @@ Ctrl+w, ARROW
 6、括号匹配
 - :set showmatch 显示匹配，简写为 :set sm
 - :set nosm 取消匹配
+
+set ts=4 设置tab键缩进的空格数 set tabstop=4
+set sw=4 设定编辑器将多少空格视为一个缩进 shiftwidth=4
 
 ## vim补充
 
