@@ -113,6 +113,8 @@ bootm c0008000 启动boot程序
 
 ## U—Boot 使用方法
 
+不同开发板不同处：
+
 1. 配置 U-Boot
 - TQ210: make TQ210_config
 - Smart210: make smart210_config
