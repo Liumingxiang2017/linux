@@ -28,13 +28,13 @@
 
 向上或向下复制一行:   Shift+Alt+Up 或 Shift+Alt+Down
 
-在当前行下方插入一行:   Ctrl+Enter
-
-在当前行上方插入一行:   Ctrl+Shift+Enter
-
 缩进去掉制表符：  shift+tab
 
 ### (2) 光标相关
+
+**在当前行下方新建一行:   Ctrl+Enter**
+
+**在当前行上方新建一行:   Ctrl+Shift+Enter**
 
 删除当前行：ctrl+shift+k
 
